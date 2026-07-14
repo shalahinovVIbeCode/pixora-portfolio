@@ -166,6 +166,12 @@ export default function Home() {
         </motion.ul>
       </section>
 
+      <footer className="site-footer">
+        <span>© 2026 PIXORA</span>
+        <span className="footer-link">Політика конфіденційності</span>
+        <span className="footer-link">Cookie</span>
+      </footer>
+
       <AnimatePresence>
         {menuOpen && (
           <motion.div

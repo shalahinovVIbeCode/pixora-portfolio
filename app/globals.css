@@ -49,6 +49,8 @@ a:focus-visible {
 }
 
 .page-shell {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
   min-height: 100svh;
   padding: 24px;
 }
@@ -57,7 +59,7 @@ a:focus-visible {
   position: relative;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  min-height: calc(100svh - 48px);
+  min-height: 0;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 16px;
@@ -267,6 +269,25 @@ a:focus-visible {
   font-weight: 650;
 }
 
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 34px;
+  padding-top: 8px;
+  color: #666662;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.footer-link {
+  text-decoration: underline;
+  text-decoration-color: #bebdb9;
+  text-underline-offset: 2px;
+}
+
 .menu-backdrop {
   position: fixed;
   inset: 0;
@@ -401,7 +422,7 @@ a:focus-visible {
   }
 
   .hero {
-    min-height: calc(100svh - 20px);
+    min-height: 0;
     border-radius: 12px;
   }
 
@@ -471,6 +492,13 @@ a:focus-visible {
     min-width: 16px;
     height: 16px;
     font-size: 7px;
+  }
+
+  .site-footer {
+    gap: 8px;
+    min-height: 32px;
+    padding-top: 7px;
+    font-size: 9px;
   }
 
   .hero-image {
