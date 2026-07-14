@@ -3,7 +3,73 @@
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
+import {
+  SiFramer,
+  SiNextdotjs,
+  SiReact,
+  SiTailwindcss,
+  SiTypescript,
+  SiVercel,
+} from "react-icons/si";
+import LogoLoop, { type LogoItem } from "../components/LogoLoop";
 import { Brand, MenuButton, ModalMenu } from "../components/SiteChrome";
+
+const technologyLogos = [
+  {
+    node: (
+      <span className="stack-logo">
+        <SiNextdotjs aria-hidden="true" />
+        <span>Next.js</span>
+      </span>
+    ),
+    title: "Next.js",
+  },
+  {
+    node: (
+      <span className="stack-logo">
+        <SiReact aria-hidden="true" />
+        <span>React</span>
+      </span>
+    ),
+    title: "React",
+  },
+  {
+    node: (
+      <span className="stack-logo">
+        <SiTypescript aria-hidden="true" />
+        <span>TypeScript</span>
+      </span>
+    ),
+    title: "TypeScript",
+  },
+  {
+    node: (
+      <span className="stack-logo">
+        <SiTailwindcss aria-hidden="true" />
+        <span>Tailwind CSS</span>
+      </span>
+    ),
+    title: "Tailwind CSS",
+  },
+  {
+    node: (
+      <span className="stack-logo">
+        <SiFramer aria-hidden="true" />
+        <span>Framer Motion</span>
+      </span>
+    ),
+    title: "Framer Motion",
+  },
+  {
+    node: (
+      <span className="stack-logo">
+        <SiVercel aria-hidden="true" />
+        <span>Vercel</span>
+      </span>
+    ),
+    title: "Vercel",
+  },
+] as const satisfies readonly LogoItem[];
 
 const projects = [
   {
@@ -228,6 +294,17 @@ export function ProjectsPage() {
                 delay: reduceMotion ? 0 : index * 0.07,
                 ease: [0.16, 1, 0.3, 1],
               }}
+              whileHover={
+                reduceMotion
+                  ? undefined
+                  : {
+                      y: -5,
+                      transition: {
+                        duration: 0.2,
+                        ease: [0.16, 1, 0.3, 1],
+                      },
+                    }
+              }
             >
               <span className="project-number">{project.number}</span>
               <ProjectPreview
@@ -336,6 +413,34 @@ export function ProjectsPage() {
               Обговорити проєкт <span aria-hidden="true">↗</span>
             </button>
           </div>
+        </motion.section>
+
+        <motion.section
+          className="stack-loop-section"
+          initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration, ease: [0.16, 1, 0.3, 1] }}
+          aria-labelledby="stack-loop-title"
+        >
+          <div className="stack-loop-heading">
+            <p className="section-eyebrow">
+              <span>03</span> Стек
+            </p>
+            <h2 id="stack-loop-title">Технології, з якими працюю</h2>
+          </div>
+          <LogoLoop
+            logos={technologyLogos}
+            speed={reduceMotion ? 0 : 42}
+            direction="left"
+            logoHeight={22}
+            gap={14}
+            hoverSpeed={reduceMotion ? 0 : 10}
+            scaleOnHover={!reduceMotion}
+            fadeOut
+            fadeOutColor="#ffffff"
+            ariaLabel="Основний стек PIXORA"
+          />
         </motion.section>
       </div>
 

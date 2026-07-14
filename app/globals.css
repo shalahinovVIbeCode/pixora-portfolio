@@ -511,13 +511,10 @@ a:focus-visible {
   border-radius: 12px;
   background: #ffffff;
   box-shadow: 0 8px 30px rgba(25, 23, 19, 0.035);
-  transition:
-    transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 220ms ease;
+  transition: box-shadow 220ms ease;
 }
 
 .project-card:hover {
-  transform: translateY(-3px);
   box-shadow: 0 12px 34px rgba(25, 23, 19, 0.045);
 }
 
@@ -538,6 +535,11 @@ a:focus-visible {
   border: 1px solid #efefed;
   border-radius: 8px;
   background: #f5f4f2;
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-card:hover .project-preview {
+  transform: scale(1.012);
 }
 
 .preview-chrome {
@@ -1051,6 +1053,55 @@ a:focus-visible {
   object-position: right center;
 }
 
+.stack-loop-section {
+  position: relative;
+  margin-top: 24px;
+  overflow: hidden;
+  padding: 28px 0 26px;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 8px 32px rgba(25, 23, 19, 0.03);
+}
+
+.stack-loop-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 0 32px 22px;
+}
+
+.stack-loop-heading h2 {
+  margin: 0;
+  color: #1a1a19;
+  font-size: clamp(1.35rem, 2.1vw, 2rem);
+  font-weight: 450;
+  letter-spacing: -0.04em;
+}
+
+.stack-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 17px;
+  border: 1px solid #e7e7e4;
+  border-radius: 9999px;
+  background: #fbfbfa;
+  color: #252523;
+  font-size: 12px;
+  font-weight: 520;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+}
+
+.stack-logo svg {
+  width: 18px;
+  height: 18px;
+  color: #111111;
+}
+
 .projects-footer {
   min-height: 40px;
   padding: 0 20px;
@@ -1120,6 +1171,12 @@ a:focus-visible {
 
   .projects-cta-actions {
     justify-content: flex-start;
+  }
+
+  .stack-loop-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
   }
 }
 
@@ -1328,6 +1385,26 @@ a:focus-visible {
   .cta-flower {
     right: -60px;
     opacity: 0.07;
+  }
+
+  .stack-loop-section {
+    margin-top: 18px;
+    padding: 24px 0 22px;
+  }
+
+  .stack-loop-heading {
+    padding: 0 18px 19px;
+  }
+
+  .stack-loop-heading h2 {
+    max-width: 280px;
+    font-size: 1.45rem;
+  }
+
+  .stack-logo {
+    min-height: 44px;
+    padding: 0 14px;
+    font-size: 11px;
   }
 }
 
