@@ -1,0 +1,524 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f6f5f2;
+  --foreground: #111111;
+  --muted: #7f7f7c;
+  --line: #eae9e6;
+  --surface: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Geist", "Geist Fallback", "Helvetica Neue", sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Geist", "Geist Fallback", "Helvetica Neue", sans-serif;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #111111;
+  outline-offset: 4px;
+}
+
+.page-shell {
+  min-height: 100svh;
+  padding: 24px;
+}
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: calc(100svh - 48px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: 0 20px 70px rgba(29, 26, 20, 0.035);
+}
+
+.hero-image {
+  z-index: 0;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+.site-header,
+.hero-copy,
+.technology-list {
+  position: relative;
+  z-index: 2;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 34px 40px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: #111111;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-decoration: none;
+}
+
+.brand-mark {
+  position: relative;
+  width: 27px;
+  height: 27px;
+  border-radius: 4px;
+  background: #111111;
+}
+
+.brand-mark::after {
+  content: "";
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 7px;
+  height: 7px;
+  border-radius: 1px;
+  background: #ffffff;
+}
+
+.menu-button,
+.action-button {
+  border-radius: 6px;
+  transition:
+    transform 200ms ease,
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+
+.menu-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 46px;
+  padding: 0 18px;
+  border: 1px solid #111111;
+  background: #111111;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 560;
+  cursor: pointer;
+}
+
+.menu-button span {
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 0;
+}
+
+.menu-button:hover,
+.action-button-primary:hover {
+  background: #303030;
+}
+
+.menu-button:active,
+.action-button:active,
+.close-button:active {
+  transform: scale(0.98);
+}
+
+.hero-copy {
+  align-self: center;
+  max-width: 930px;
+  padding: 44px 40px 88px;
+}
+
+.hero-copy h1 {
+  margin: 0;
+  color: #111111;
+  font-size: clamp(3.25rem, 5.35vw, 6.15rem);
+  font-weight: 430;
+  letter-spacing: -0.06em;
+  line-height: 1.02;
+}
+
+.hero-copy h1 span {
+  color: #858583;
+  font-weight: 400;
+}
+
+.hero-description {
+  max-width: 480px;
+  margin: 34px 0 0;
+  color: #737370;
+  font-size: clamp(1rem, 1.25vw, 1.18rem);
+  line-height: 1.65;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 38px;
+}
+
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  min-height: 52px;
+  padding: 0 22px;
+  font-size: 14px;
+  font-weight: 520;
+  cursor: pointer;
+}
+
+.action-button span {
+  font-size: 16px;
+}
+
+.action-button-primary {
+  border: 1px solid #111111;
+  background: #111111;
+  color: #ffffff;
+}
+
+.action-button-secondary {
+  border: 1px solid #d8d7d3;
+  background: rgba(255, 255, 255, 0.74);
+  color: #111111;
+}
+
+.action-button-secondary:hover {
+  border-color: #a8a7a3;
+  background: #ffffff;
+}
+
+.technology-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0 40px 34px;
+  list-style: none;
+}
+
+.technology-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 35px;
+  padding: 0 13px 0 9px;
+  border: 1px solid rgba(17, 17, 17, 0.09);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.74);
+  color: #2e2e2d;
+  font-size: 12px;
+  font-weight: 480;
+  backdrop-filter: blur(8px);
+}
+
+.technology-mark {
+  display: grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  border: 1px solid rgba(17, 17, 17, 0.28);
+  border-radius: 4px;
+  font-family: "Geist Mono", "Geist Mono Fallback", monospace;
+  font-size: 8px;
+  font-weight: 650;
+}
+
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(243, 242, 239, 0.82);
+  backdrop-filter: blur(12px);
+}
+
+.menu-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(760px, 100%);
+  min-height: min(760px, calc(100svh - 48px));
+  max-height: calc(100svh - 48px);
+  overflow-y: auto;
+  padding: 34px 40px 50px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 26px 90px rgba(29, 26, 20, 0.045);
+}
+
+.menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.close-button {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0 0 3px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: #f3f3f2;
+  color: #111111;
+  font-size: 30px;
+  font-weight: 260;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform 200ms ease,
+    background-color 200ms ease;
+}
+
+.close-button:hover {
+  background: #e9e9e7;
+}
+
+.menu-label {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-top: 72px;
+  color: #8b8b88;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.menu-label span {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: #bcbcb9;
+}
+
+.menu-list {
+  margin: 28px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+
+.menu-list li {
+  border-bottom: 1px solid var(--line);
+}
+
+.menu-list button {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  align-items: center;
+  width: 100%;
+  padding: 27px 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menu-index {
+  color: #90908c;
+  font-family: "Geist Mono", "Geist Mono Fallback", monospace;
+  font-size: 11px;
+}
+
+.menu-name {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 420;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menu-list button:hover .menu-name {
+  transform: translateX(8px);
+}
+
+@media (max-width: 900px) {
+  .hero-copy {
+    max-width: 760px;
+  }
+
+  .hero-image {
+    object-position: 64% center;
+  }
+
+  .hero-wash {
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+@media (max-width: 640px) {
+  .page-shell,
+  .menu-backdrop {
+    padding: 10px;
+  }
+
+  .hero {
+    min-height: calc(100svh - 20px);
+    border-radius: 12px;
+  }
+
+  .site-header {
+    padding: 20px;
+  }
+
+  .brand {
+    gap: 10px;
+    font-size: 12px;
+    letter-spacing: 0.21em;
+  }
+
+  .brand-mark {
+    width: 23px;
+    height: 23px;
+  }
+
+  .menu-button {
+    min-height: 40px;
+    padding: 0 13px;
+    font-size: 12px;
+  }
+
+  .hero-copy {
+    align-self: end;
+    padding: 80px 20px 42px;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+    line-height: 1.01;
+  }
+
+  .hero-description {
+    max-width: 370px;
+    margin-top: 24px;
+    color: #5f5f5d;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .hero-actions {
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .action-button {
+    min-height: 48px;
+    padding: 0 16px;
+    gap: 13px;
+    font-size: 12px;
+  }
+
+  .technology-list {
+    gap: 7px;
+    padding: 0 20px 20px;
+  }
+
+  .technology-list li {
+    min-height: 31px;
+    padding: 0 10px 0 7px;
+    font-size: 10px;
+  }
+
+  .technology-mark {
+    min-width: 16px;
+    height: 16px;
+    font-size: 7px;
+  }
+
+  .hero-image {
+    object-position: 64% center;
+  }
+
+  .hero-wash {
+    background: rgba(255, 255, 255, 0.42);
+  }
+
+  .menu-panel {
+    width: 100%;
+    min-height: calc(100svh - 20px);
+    max-height: calc(100svh - 20px);
+    padding: 20px 20px 30px;
+    border-radius: 12px;
+  }
+
+  .close-button {
+    width: 40px;
+    height: 40px;
+    font-size: 26px;
+  }
+
+  .menu-label {
+    margin-top: 56px;
+  }
+
+  .menu-list {
+    margin-top: 22px;
+  }
+
+  .menu-list button {
+    grid-template-columns: 36px 1fr;
+    padding: 24px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
