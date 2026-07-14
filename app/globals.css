@@ -1119,21 +1119,21 @@ a:focus-visible {
 }
 
 .about-content {
-  width: min(100%, 1380px);
+  width: min(100%, 1440px);
   margin: 0 auto;
-  padding: 42px clamp(24px, 5vw, 72px) 72px;
+  padding: 42px clamp(24px, 4vw, 58px) 72px;
 }
 
 .about-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.03fr) minmax(440px, 0.97fr);
-  gap: clamp(46px, 7vw, 104px);
+  grid-template-columns: minmax(0, 1.1fr) minmax(430px, 0.9fr);
+  gap: clamp(38px, 5vw, 72px);
   align-items: center;
   padding: 28px 0 112px;
 }
 
 .about-hero-copy {
-  max-width: 720px;
+  max-width: 790px;
 }
 
 .about-hero h1 {
@@ -1150,8 +1150,14 @@ a:focus-visible {
   font-weight: 400;
 }
 
+.about-hero h1 .about-title-primary {
+  color: #111111;
+  font-weight: 420;
+  white-space: nowrap;
+}
+
 .about-lead {
-  max-width: 610px;
+  max-width: 680px;
   margin: 34px 0 0;
   color: #686865;
   font-size: clamp(1rem, 1.3vw, 1.16rem);
@@ -1188,12 +1194,25 @@ a:focus-visible {
   background: #ffffff;
   box-shadow: 0 12px 40px rgba(25, 23, 19, 0.035);
   transform-origin: center;
+  transition:
+    border-color 450ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 450ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .about-sculpture svg {
   display: block;
   width: 100%;
   height: 100%;
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-hero-visual:hover .about-sculpture {
+  border-color: #ddddda;
+  box-shadow: 0 22px 60px rgba(25, 23, 19, 0.065);
+}
+
+.about-hero-visual:hover .about-sculpture svg {
+  transform: scale(1.012);
 }
 
 .sculpture-ground {
@@ -1314,6 +1333,11 @@ a:focus-visible {
   min-width: 0;
   padding: 17px 18px;
   border-right: 1px solid #eaeaea;
+  transition: background-color 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.founder-card > div:hover {
+  background: #f7f7f5;
 }
 
 .founder-card > div:last-child {
@@ -1338,6 +1362,11 @@ a:focus-visible {
   font-size: 11px;
   font-weight: 580;
   line-height: 1.35;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.founder-card > div:hover strong {
+  transform: translateY(-1px);
 }
 
 .founder-status i {
@@ -1421,17 +1450,25 @@ a:focus-visible {
   border-radius: 12px;
   background: #ffffff;
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-  transition: box-shadow 200ms ease;
+  transition:
+    border-color 350ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 350ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .benefit-card:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border-color: #ddddda;
+  box-shadow: 0 16px 42px rgba(25, 23, 19, 0.055);
 }
 
 .benefit-card > span {
   color: #858581;
   font-family: "Geist Mono", "Geist Mono Fallback", monospace;
   font-size: 10px;
+  transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.benefit-card:hover > span {
+  transform: translateX(3px);
 }
 
 .benefit-card h3 {
@@ -1470,6 +1507,16 @@ a:focus-visible {
   padding: 34px;
   border: 1px solid #eaeaea;
   border-radius: 12px;
+  transition:
+    transform 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fit-card:hover {
+  transform: translateY(-4px);
+  border-color: #d9d9d6;
+  box-shadow: 0 18px 48px rgba(25, 23, 19, 0.05);
 }
 
 .fit-card-positive {
@@ -1573,6 +1620,15 @@ a:focus-visible {
   border-right: 1px solid #eaeaea;
   border-bottom: 1px solid #eaeaea;
   background: #ffffff;
+  transition:
+    transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-stack-item:hover {
+  z-index: 1;
+  transform: translateY(-2px);
+  background: #f7f7f5;
 }
 
 .about-stack-item svg {
@@ -1580,6 +1636,11 @@ a:focus-visible {
   width: 22px;
   height: 22px;
   color: #171717;
+  transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-stack-item:hover svg {
+  transform: scale(1.08);
 }
 
 .about-stack-item div {
@@ -1617,6 +1678,22 @@ a:focus-visible {
   border-radius: 12px;
   background: #ffffff;
   box-shadow: 0 8px 32px rgba(25, 23, 19, 0.03);
+  transition:
+    border-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-cta:hover {
+  border-color: #ddddda;
+  box-shadow: 0 18px 52px rgba(25, 23, 19, 0.055);
+}
+
+.about-page .action-button span {
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-page .action-button:hover span {
+  transform: translate(2px, -2px);
 }
 
 .about-cta h2 {
@@ -1932,6 +2009,10 @@ a:focus-visible {
   .about-hero h1 {
     margin-top: 18px;
     font-size: clamp(3.05rem, 14vw, 4.25rem);
+  }
+
+  .about-hero h1 .about-title-primary {
+    white-space: normal;
   }
 
   .about-lead {

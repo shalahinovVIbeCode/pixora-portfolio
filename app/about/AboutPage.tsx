@@ -213,7 +213,7 @@ export function AboutPage() {
           <div className="about-hero-copy">
             <SectionLabel number="01">Про мене</SectionLabel>
             <h1>
-              Один розробник.
+              <span className="about-title-primary">Один розробник.</span>
               <br />
               <span>Від ідеї до запуску.</span>
             </h1>
