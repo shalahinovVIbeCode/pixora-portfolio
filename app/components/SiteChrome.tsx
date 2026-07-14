@@ -9,7 +9,7 @@ const navigationItems = [
   { label: "Головна", href: "/" },
   { label: "Проєкти", href: "/projects" },
   { label: "Про мене", href: "/about" },
-  { label: "Контакти", href: "/#contact" },
+  { label: "Контакти", href: "/contacts" },
 ];
 
 export function Brand() {
