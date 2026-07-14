@@ -39,7 +39,7 @@ export default function Home() {
     };
   }, [menuOpen]);
 
-  const duration = reduceMotion ? 0 : 0.7;
+  const duration = reduceMotion ? 0 : 0.32;
 
   return (
     <main className="page-shell" id="home">
@@ -56,7 +56,7 @@ export default function Home() {
 
         <motion.header
           className="site-header"
-          initial={{ opacity: 0, y: -10 }}
+          initial={{ opacity: 0, y: -4 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration, ease: [0.16, 1, 0.3, 1] }}
         >
@@ -79,14 +79,14 @@ export default function Home() {
           variants={{
             hidden: {},
             visible: {
-              transition: { staggerChildren: reduceMotion ? 0 : 0.1 },
+              transition: { staggerChildren: reduceMotion ? 0 : 0.04 },
             },
           }}
         >
           <motion.h1
             id="hero-title"
             variants={{
-              hidden: { opacity: 0, y: 18 },
+              hidden: { opacity: 0, y: 6 },
               visible: {
                 opacity: 1,
                 y: 0,
@@ -104,7 +104,7 @@ export default function Home() {
           <motion.p
             className="hero-description"
             variants={{
-              hidden: { opacity: 0, y: 14 },
+              hidden: { opacity: 0, y: 4 },
               visible: {
                 opacity: 1,
                 y: 0,
@@ -119,7 +119,7 @@ export default function Home() {
           <motion.div
             className="hero-actions"
             variants={{
-              hidden: { opacity: 0, y: 14 },
+              hidden: { opacity: 0, y: 4 },
               visible: {
                 opacity: 1,
                 y: 0,
@@ -147,11 +147,11 @@ export default function Home() {
         <motion.ul
           className="technology-list"
           aria-label="Технології"
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration,
-            delay: reduceMotion ? 0 : 0.5,
+            delay: reduceMotion ? 0 : 0.12,
             ease: [0.16, 1, 0.3, 1],
           }}
         >
@@ -190,16 +190,16 @@ export default function Home() {
               role="dialog"
               aria-modal="true"
               aria-label="Головне меню"
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 24, scale: 0.985 }}
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 10, scale: 0.992 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: 0.99 }}
+              exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: 0.994 }}
               transition={{
-                duration: reduceMotion ? 0 : 0.45,
+                duration: reduceMotion ? 0 : 0.28,
                 ease: [0.16, 1, 0.3, 1],
               }}
             >
               <div className="menu-header">
-                <Brand />
+                <span className="menu-kicker">Відкрити розділ</span>
                 <button
                   ref={closeButtonRef}
                   className="close-button"
@@ -211,10 +211,6 @@ export default function Home() {
                 </button>
               </div>
 
-              <div className="menu-label">
-                <span aria-hidden="true" /> Меню
-              </div>
-
               <motion.nav
                 aria-label="Навігація"
                 initial="hidden"
@@ -222,7 +218,7 @@ export default function Home() {
                 variants={{
                   hidden: {},
                   visible: {
-                    transition: { staggerChildren: reduceMotion ? 0 : 0.07 },
+                    transition: { staggerChildren: reduceMotion ? 0 : 0.04 },
                   },
                 }}
               >
@@ -231,12 +227,12 @@ export default function Home() {
                     <motion.li
                       key={item}
                       variants={{
-                        hidden: { opacity: 0, y: 12 },
+                        hidden: { opacity: 0, y: 5 },
                         visible: {
                           opacity: 1,
                           y: 0,
                           transition: {
-                            duration: reduceMotion ? 0 : 0.45,
+                            duration: reduceMotion ? 0 : 0.26,
                             ease: [0.16, 1, 0.3, 1],
                           },
                         },
@@ -247,11 +243,18 @@ export default function Home() {
                           {String(index + 1).padStart(2, "0")}
                         </span>
                         <span className="menu-name">{item}</span>
+                        <span className="menu-arrow" aria-hidden="true">→</span>
                       </button>
                     </motion.li>
                   ))}
                 </ol>
               </motion.nav>
+
+              <div className="menu-footer">
+                <span>© 2026 PIXORA</span>
+                <span className="footer-link">Політика конфіденційності</span>
+                <span className="footer-link">Cookie</span>
+              </div>
             </motion.section>
           </motion.div>
         )}
