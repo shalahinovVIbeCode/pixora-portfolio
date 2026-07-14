@@ -1,43 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import Link from "next/link";
+import { useState } from "react";
+import { Brand, MenuButton, ModalMenu } from "./components/SiteChrome";
 
 const technologies = ["Next.js", "React", "TypeScript", "Tailwind CSS"];
-const menuItems = ["Головна", "Проєкти", "Про мене", "Контакти"];
-
-function Brand() {
-  return (
-    <a className="brand" href="#home" aria-label="PIXORA — на головну">
-      <span className="brand-mark" aria-hidden="true" />
-      <span>PIXORA</span>
-    </a>
-  );
-}
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (!menuOpen) return;
-
-    const previousOverflow = document.body.style.overflow;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
-    };
-
-    document.body.style.overflow = "hidden";
-    document.addEventListener("keydown", onKeyDown);
-    closeButtonRef.current?.focus();
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [menuOpen]);
 
   const duration = reduceMotion ? 0 : 0.32;
 
@@ -61,15 +34,7 @@ export default function Home() {
           transition={{ duration, ease: [0.16, 1, 0.3, 1] }}
         >
           <Brand />
-          <button
-            className="menu-button"
-            type="button"
-            aria-expanded={menuOpen}
-            aria-controls="main-menu"
-            onClick={() => setMenuOpen(true)}
-          >
-            <span aria-hidden="true">+</span> Меню
-          </button>
+          <MenuButton open={menuOpen} onOpen={() => setMenuOpen(true)} />
         </motion.header>
 
         <motion.div
@@ -127,13 +92,12 @@ export default function Home() {
               },
             }}
           >
-            <button
+            <Link
               className="action-button action-button-primary"
-              type="button"
-              onClick={() => setMenuOpen(true)}
+              href="/projects"
             >
               Переглянути проєкти <span aria-hidden="true">↗</span>
-            </button>
+            </Link>
             <button
               className="action-button action-button-secondary"
               type="button"
@@ -172,93 +136,7 @@ export default function Home() {
         <span className="footer-link">Cookie</span>
       </footer>
 
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            className="menu-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: reduceMotion ? 0 : 0.25 }}
-            onMouseDown={(event) => {
-              if (event.target === event.currentTarget) setMenuOpen(false);
-            }}
-          >
-            <motion.section
-              id="main-menu"
-              className="menu-panel"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Головне меню"
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 10, scale: 0.992 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: 0.994 }}
-              transition={{
-                duration: reduceMotion ? 0 : 0.28,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-            >
-              <div className="menu-header">
-                <span className="menu-kicker">Відкрити розділ</span>
-                <button
-                  ref={closeButtonRef}
-                  className="close-button"
-                  type="button"
-                  aria-label="Закрити меню"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  ×
-                </button>
-              </div>
-
-              <motion.nav
-                aria-label="Навігація"
-                initial="hidden"
-                animate="visible"
-                variants={{
-                  hidden: {},
-                  visible: {
-                    transition: { staggerChildren: reduceMotion ? 0 : 0.04 },
-                  },
-                }}
-              >
-                <ol className="menu-list">
-                  {menuItems.map((item, index) => (
-                    <motion.li
-                      key={item}
-                      variants={{
-                        hidden: { opacity: 0, y: 5 },
-                        visible: {
-                          opacity: 1,
-                          y: 0,
-                          transition: {
-                            duration: reduceMotion ? 0 : 0.26,
-                            ease: [0.16, 1, 0.3, 1],
-                          },
-                        },
-                      }}
-                    >
-                      <button type="button" onClick={() => setMenuOpen(false)}>
-                        <span className="menu-index">
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
-                        <span className="menu-name">{item}</span>
-                        <span className="menu-arrow" aria-hidden="true">→</span>
-                      </button>
-                    </motion.li>
-                  ))}
-                </ol>
-              </motion.nav>
-
-              <div className="menu-footer">
-                <span>© 2026 PIXORA</span>
-                <span className="footer-link">Політика конфіденційності</span>
-                <span className="footer-link">Cookie</span>
-              </div>
-            </motion.section>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <ModalMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
     </main>
   );
 }

@@ -363,7 +363,7 @@ a:focus-visible {
   border-bottom: 1px solid var(--line);
 }
 
-.menu-list button {
+.menu-list a {
   display: grid;
   grid-template-columns: 38px 1fr 24px;
   align-items: center;
@@ -372,6 +372,8 @@ a:focus-visible {
   border: 0;
   border-radius: 8px;
   background: transparent;
+  color: inherit;
+  text-decoration: none;
   text-align: left;
   cursor: pointer;
   transition:
@@ -399,19 +401,22 @@ a:focus-visible {
   transition: opacity 180ms ease;
 }
 
-.menu-list button:hover,
-.menu-list button:focus-visible {
+.menu-list a:hover,
+.menu-list a:focus-visible,
+.menu-list a.is-current {
   background: #111111;
   color: #ffffff;
 }
 
-.menu-list button:hover .menu-index,
-.menu-list button:focus-visible .menu-index {
+.menu-list a:hover .menu-index,
+.menu-list a:focus-visible .menu-index,
+.menu-list a.is-current .menu-index {
   color: #aaaaa6;
 }
 
-.menu-list button:hover .menu-arrow,
-.menu-list button:focus-visible .menu-arrow {
+.menu-list a:hover .menu-arrow,
+.menu-list a:focus-visible .menu-arrow,
+.menu-list a.is-current .menu-arrow {
   opacity: 1;
 }
 
@@ -427,6 +432,645 @@ a:focus-visible {
   line-height: 1.4;
 }
 
+.projects-page {
+  min-height: 100svh;
+  overflow: hidden;
+  background: #faf9f7;
+}
+
+.projects-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(100%, 1480px);
+  margin: 0 auto;
+  padding: 30px clamp(24px, 6vw, 92px);
+}
+
+.projects-content {
+  width: min(100%, 1380px);
+  margin: 0 auto;
+  padding: 42px clamp(24px, 5vw, 72px) 70px;
+}
+
+.projects-intro {
+  max-width: 820px;
+}
+
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  color: #878783;
+  font-family: "Geist Mono", "Geist Mono Fallback", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.section-eyebrow span {
+  color: #4e4e4b;
+}
+
+.projects-intro h1 {
+  margin: 22px 0 0;
+  color: #111111;
+  font-size: clamp(3.8rem, 6.1vw, 6.6rem);
+  font-weight: 420;
+  letter-spacing: -0.065em;
+  line-height: 0.96;
+}
+
+.projects-intro h1 span {
+  color: #858583;
+  font-weight: 400;
+}
+
+.projects-lead {
+  max-width: 480px;
+  margin: 24px 0 0;
+  color: #777773;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 42px;
+}
+
+.project-card {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  padding: 10px;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 8px 30px rgba(25, 23, 19, 0.035);
+  transition:
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 220ms ease;
+}
+
+.project-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 34px rgba(25, 23, 19, 0.045);
+}
+
+.project-number {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 3;
+  color: #777773;
+  font-family: "Geist Mono", "Geist Mono Fallback", monospace;
+  font-size: 10px;
+}
+
+.project-preview {
+  position: relative;
+  aspect-ratio: 1.48;
+  overflow: hidden;
+  border: 1px solid #efefed;
+  border-radius: 8px;
+  background: #f5f4f2;
+}
+
+.preview-chrome {
+  position: absolute;
+  top: 11px;
+  right: 12px;
+  z-index: 2;
+  display: flex;
+  gap: 4px;
+}
+
+.preview-chrome span {
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: #b8b8b4;
+}
+
+.tracker-ui,
+.tasks-ui {
+  position: absolute;
+  inset: 34px 12px 12px;
+  display: flex;
+  overflow: hidden;
+  border: 1px solid #e7e7e4;
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 0 8px 18px rgba(25, 23, 19, 0.03);
+}
+
+.tracker-sidebar,
+.tasks-sidebar {
+  display: flex;
+  flex: 0 0 19%;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-top: 12px;
+  border-right: 1px solid #eeeeec;
+  background: #fafaf9;
+}
+
+.tracker-sidebar b,
+.tasks-sidebar b {
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 4px;
+  background: #111111;
+  color: #ffffff;
+  font-size: 7px;
+}
+
+.tracker-sidebar i,
+.tasks-sidebar i {
+  width: 18px;
+  height: 3px;
+  border-radius: 9999px;
+  background: #ddddda;
+}
+
+.tracker-content {
+  flex: 1;
+  min-width: 0;
+  padding: 13px;
+}
+
+.preview-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.preview-title-row strong {
+  font-size: 8px;
+  font-weight: 620;
+}
+
+.preview-title-row span {
+  width: 28px;
+  height: 7px;
+  border-radius: 3px;
+  background: #111111;
+}
+
+.tracker-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-top: 12px;
+}
+
+.tracker-metrics i {
+  height: 28px;
+  border: 1px solid #eeeeeb;
+  border-radius: 4px;
+  background: #fbfbfa;
+}
+
+.tracker-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 7px;
+  height: 55px;
+  margin-top: 10px;
+  padding: 5px 8px;
+  border: 1px solid #eeeeeb;
+  border-radius: 4px;
+}
+
+.tracker-chart span {
+  flex: 1;
+  min-height: 8px;
+  border-radius: 2px 2px 0 0;
+  background: #d9d9d5;
+}
+
+.tracker-chart span:nth-child(4),
+.tracker-chart span:nth-child(6) {
+  background: #777773;
+}
+
+.medtech-ui {
+  position: absolute;
+  inset: 35px 15px 14px;
+  display: grid;
+  grid-template-columns: 1fr 0.95fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.medtech-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.medtech-copy small {
+  color: #888884;
+  font-family: "Geist Mono", "Geist Mono Fallback", monospace;
+  font-size: 6px;
+}
+
+.medtech-copy strong {
+  max-width: 130px;
+  margin-top: 13px;
+  font-size: clamp(10px, 1vw, 15px);
+  font-weight: 520;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.medtech-copy i {
+  width: 72%;
+  height: 3px;
+  margin-top: 8px;
+  border-radius: 9999px;
+  background: #dededb;
+}
+
+.medtech-copy i + i {
+  width: 54%;
+  margin-top: 5px;
+}
+
+.medtech-copy button {
+  margin-top: 13px;
+  padding: 5px 9px;
+  border: 0;
+  border-radius: 4px;
+  background: #222222;
+  color: #ffffff;
+  font-size: 6px;
+}
+
+.medtech-object {
+  position: relative;
+  height: 82%;
+  border: 1px solid #e8e8e5;
+  border-radius: 9px;
+  background: #f1f1ef;
+}
+
+.medtech-object span {
+  position: absolute;
+  top: 26%;
+  left: 25%;
+  width: 52%;
+  height: 44%;
+  border: 7px solid #d1d1cd;
+  border-radius: 9px;
+  background: #fafaf9;
+}
+
+.medtech-object i {
+  position: absolute;
+  right: 18%;
+  bottom: 17%;
+  width: 6px;
+  height: 32%;
+  border-radius: 3px;
+  background: #bdbdb8;
+}
+
+.medtech-object i + i {
+  right: auto;
+  left: 22%;
+}
+
+.travel-ui {
+  position: absolute;
+  inset: 26px 24px 8px;
+}
+
+.travel-phone {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 38%;
+  height: 88%;
+  padding: 17px 8px 8px;
+  border: 2px solid #dededb;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 8px 18px rgba(25, 23, 19, 0.04);
+}
+
+.travel-phone::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 22px;
+  height: 3px;
+  border-radius: 9999px;
+  background: #d7d7d3;
+  transform: translateX(-50%);
+}
+
+.travel-phone b {
+  font-size: 7px;
+}
+
+.travel-phone i {
+  height: 14px;
+  margin-top: 7px;
+  border-radius: 4px;
+  background: #ececea;
+}
+
+.travel-phone-back {
+  top: 10%;
+  left: 18%;
+  transform: rotate(-5deg);
+}
+
+.travel-phone-front {
+  right: 16%;
+  bottom: 0;
+  transform: rotate(4deg);
+}
+
+.travel-phone-front div {
+  height: 42%;
+  margin-top: 8px;
+  border-radius: 5px;
+  background: #dce5df;
+}
+
+.tasks-table {
+  flex: 1;
+  padding: 14px 12px;
+}
+
+.tasks-table strong {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 8px;
+}
+
+.tasks-table div {
+  display: grid;
+  grid-template-columns: 8px 1fr 28px;
+  gap: 7px;
+  align-items: center;
+  min-height: 21px;
+  border-top: 1px solid #eeeeeb;
+}
+
+.tasks-table span {
+  width: 7px;
+  height: 7px;
+  border: 1px solid #c9c9c5;
+  border-radius: 2px;
+}
+
+.tasks-table i {
+  width: 68%;
+  height: 3px;
+  border-radius: 9999px;
+  background: #d8d8d4;
+}
+
+.tasks-table em {
+  width: 22px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #edf3ec;
+}
+
+.project-card-copy {
+  padding: 15px 6px 7px;
+}
+
+.project-card-copy h2 {
+  margin: 0;
+  color: #161616;
+  font-size: 18px;
+  font-weight: 520;
+  letter-spacing: -0.035em;
+}
+
+.project-card-copy p {
+  min-height: 44px;
+  margin: 8px 0 0;
+  color: #7b7b77;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.project-card-copy ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-card-copy li {
+  padding: 6px 10px;
+  border: 1px solid #e7e7e4;
+  border-radius: 9999px;
+  color: #343432;
+  background: #fbfbfa;
+  font-size: 9px;
+}
+
+.skills-section {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(230px, 0.72fr) minmax(0, 2.3fr);
+  gap: 44px;
+  margin-top: 24px;
+  padding: 34px;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 8px 32px rgba(25, 23, 19, 0.03);
+}
+
+.skills-intro {
+  padding-right: 20px;
+}
+
+.skills-intro h2 {
+  margin: 18px 0 0;
+  color: #171717;
+  font-size: clamp(2rem, 3vw, 3.25rem);
+  font-weight: 430;
+  letter-spacing: -0.055em;
+  line-height: 1.02;
+}
+
+.skills-intro > p:last-child {
+  max-width: 260px;
+  margin: 24px 0 0;
+  color: #777773;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.skills-list {
+  min-width: 0;
+}
+
+.skill-row {
+  display: grid;
+  grid-template-columns: 44px minmax(180px, 0.8fr) minmax(220px, 1.5fr);
+  gap: 18px;
+  align-items: center;
+  min-height: 72px;
+  border-bottom: 1px solid #ececea;
+}
+
+.skill-row:last-child {
+  border-bottom: 0;
+}
+
+.skill-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e8e8e5;
+  border-radius: 8px;
+  background: #f7f7f5;
+  color: #333331;
+  font-family: "Geist Mono", "Geist Mono Fallback", monospace;
+  font-size: 9px;
+  font-weight: 650;
+}
+
+.skill-copy h3 {
+  margin: 0;
+  color: #232322;
+  font-size: 13px;
+  font-weight: 580;
+}
+
+.skill-copy p {
+  margin: 5px 0 0;
+  color: #898985;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.skill-meter {
+  display: grid;
+  grid-template-columns: minmax(100px, 1fr) 36px;
+  gap: 16px;
+  align-items: center;
+  color: #343432;
+  font-family: "Geist Mono", "Geist Mono Fallback", monospace;
+  font-size: 9px;
+  text-align: right;
+}
+
+.skill-track {
+  height: 4px;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: #e9e9e6;
+}
+
+.skill-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: #111111;
+  transform-origin: left;
+}
+
+.projects-cta {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 30px;
+  align-items: center;
+  min-height: 126px;
+  margin-top: 24px;
+  overflow: hidden;
+  padding: 26px 32px;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 8px 32px rgba(25, 23, 19, 0.03);
+}
+
+.projects-cta-copy,
+.projects-cta-actions {
+  position: relative;
+  z-index: 2;
+}
+
+.projects-cta h2 {
+  margin: 0;
+  color: #171717;
+  font-size: 28px;
+  font-weight: 450;
+  letter-spacing: -0.045em;
+}
+
+.projects-cta p {
+  margin: 7px 0 0;
+  color: #858581;
+  font-size: 11px;
+}
+
+.projects-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.cta-flower {
+  position: absolute;
+  right: 36%;
+  bottom: -45px;
+  width: 230px;
+  height: 130px;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.cta-flower img {
+  object-fit: cover;
+  object-position: right center;
+}
+
+.projects-footer {
+  min-height: 40px;
+  padding: 0 20px;
+  border-top: 1px solid #ececea;
+}
+
+@media (max-width: 1180px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-preview {
+    aspect-ratio: 1.65;
+  }
+
+  .skill-row {
+    grid-template-columns: 44px minmax(160px, 0.8fr) minmax(180px, 1.2fr);
+  }
+}
+
 @media (max-width: 900px) {
   .hero-copy {
     max-width: 760px;
@@ -438,6 +1082,44 @@ a:focus-visible {
 
   .hero-wash {
     background: rgba(255, 255, 255, 0.25);
+  }
+
+  .projects-topbar {
+    padding: 24px;
+  }
+
+  .projects-content {
+    padding: 38px 24px 58px;
+  }
+
+  .skills-section {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .skills-intro {
+    padding-right: 0;
+  }
+
+  .skills-intro > p:last-child {
+    max-width: 420px;
+  }
+
+  .skill-row {
+    grid-template-columns: 44px minmax(0, 1fr);
+    padding: 10px 0;
+  }
+
+  .skill-meter {
+    grid-column: 2;
+  }
+
+  .projects-cta {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-cta-actions {
+    justify-content: flex-start;
   }
 }
 
@@ -552,7 +1234,7 @@ a:focus-visible {
     font-size: 20px;
   }
 
-  .menu-list button {
+  .menu-list a {
     grid-template-columns: 30px 1fr 20px;
     padding: 17px 10px;
   }
@@ -566,6 +1248,86 @@ a:focus-visible {
     gap: 8px;
     padding-top: 13px;
     font-size: 8px;
+  }
+
+  .projects-topbar {
+    padding: 20px;
+  }
+
+  .projects-topbar .menu-button {
+    min-height: 40px;
+    padding: 0 13px;
+    font-size: 12px;
+  }
+
+  .projects-content {
+    padding: 34px 14px 48px;
+  }
+
+  .projects-intro h1 {
+    margin-top: 18px;
+    font-size: clamp(3rem, 14vw, 4.3rem);
+  }
+
+  .projects-lead {
+    max-width: 330px;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 32px;
+  }
+
+  .project-preview {
+    aspect-ratio: 1.55;
+  }
+
+  .project-card-copy p {
+    min-height: 0;
+  }
+
+  .skills-section {
+    margin-top: 18px;
+    padding: 24px 18px;
+  }
+
+  .skills-intro h2 {
+    font-size: 2.35rem;
+  }
+
+  .skill-row {
+    gap: 12px;
+  }
+
+  .skill-copy p {
+    max-width: 250px;
+  }
+
+  .skill-meter {
+    grid-template-columns: minmax(100px, 1fr) 32px;
+    gap: 12px;
+  }
+
+  .projects-cta {
+    margin-top: 18px;
+    padding: 24px 18px;
+  }
+
+  .projects-cta-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .projects-cta-actions .action-button {
+    width: 100%;
+  }
+
+  .cta-flower {
+    right: -60px;
+    opacity: 0.07;
   }
 }
 
