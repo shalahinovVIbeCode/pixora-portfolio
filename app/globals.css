@@ -60,7 +60,7 @@ a:focus-visible {
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 0;
-  overflow: hidden;
+  overflow: clip;
   border: 0;
   border-radius: 0;
   background: var(--surface);
@@ -507,7 +507,7 @@ a:focus-visible {
 
 .projects-page {
   min-height: 100svh;
-  overflow: hidden;
+  overflow: clip;
   background: #faf9f7;
 }
 
@@ -1240,7 +1240,7 @@ a:focus-visible {
 
 .about-page {
   min-height: 100svh;
-  overflow: hidden;
+  overflow: clip;
   background: #faf9f7;
 }
 
@@ -1870,7 +1870,7 @@ a:focus-visible {
 /* Contacts */
 .contacts-page {
   min-height: 100svh;
-  overflow: hidden;
+  overflow: clip;
   background: #faf9f7;
 }
 
@@ -3028,6 +3028,43 @@ html[data-theme="dark"] .menu-close {
 
   .language-toggle {
     gap: 5px;
+  }
+}
+
+.site-header,
+.projects-topbar,
+.about-topbar,
+.contacts-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  width: 100%;
+  max-width: none;
+  min-height: 70px;
+  margin: 0;
+  padding: 11px clamp(20px, 3.2vw, 52px);
+  border-top: 1px solid rgba(255, 255, 255, 0.72);
+  border-bottom: 1px solid rgba(25, 23, 19, 0.1);
+  background: rgba(250, 249, 247, 0.86);
+  box-shadow: 0 8px 28px rgba(25, 23, 19, 0.045), inset 0 -1px 0 rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(20px) saturate(1.18);
+  -webkit-backdrop-filter: blur(20px) saturate(1.18);
+}
+
+html[data-theme="dark"] :where(.site-header, .projects-topbar, .about-topbar, .contacts-topbar) {
+  border-top-color: rgba(255, 255, 255, 0.07);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+  background: rgba(13, 13, 12, 0.84);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2), inset 0 -1px 0 rgba(255, 255, 255, 0.025);
+}
+
+@media (max-width: 640px) {
+  .site-header,
+  .projects-topbar,
+  .about-topbar,
+  .contacts-topbar {
+    min-height: 62px;
+    padding: 10px 14px;
   }
 }
 
