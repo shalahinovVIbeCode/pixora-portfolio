@@ -16,16 +16,17 @@ import { PreferenceControls, usePreferences } from "../components/Preferences";
 
 type ContactChannel = {
   label: string;
-  href: string;
   icon: IconType;
+  href?: string;
   external?: boolean;
+  unavailable?: { uk: string; en: string };
 };
 
 const channels = [
-  { label: "Telegram", href: "https://t.me/shalahinovads", icon: PiTelegramLogo, external: true },
-  { label: "Instagram", href: "https://instagram.com/shalahinov.ads", icon: PiInstagramLogo, external: true },
+  { label: "Telegram", href: "https://t.me/MalbaroWFP", icon: PiTelegramLogo, external: true },
+  { label: "Instagram", icon: PiInstagramLogo, unavailable: { uk: "Пізніше з’явиться", en: "Coming later" } },
   { label: "Email", href: "mailto:shalahinov.ads@gmail.com", icon: PiEnvelopeSimple },
-  { label: "GitHub", href: "https://github.com/shalahinovVIbeCode", icon: PiGithubLogo, external: true },
+  { label: "GitHub", icon: PiGithubLogo, unavailable: { uk: "Пізніше з’явиться", en: "Coming later" } },
 ] as const satisfies readonly ContactChannel[];
 
 const details = [
@@ -59,18 +60,30 @@ const contactsCopy = {
   },
 } as const;
 
-function ChannelLink({ channel, compact = false }: { channel: ContactChannel; compact?: boolean }) {
+function ChannelLink({ channel, language, compact = false }: { channel: ContactChannel; language: "uk" | "en"; compact?: boolean }) {
   const Icon = channel.icon;
+  const className = compact ? "contact-strip-link" : "contact-channel-link";
+  const content = (
+    <>
+      <span className="contact-link-label"><Icon aria-hidden="true" />{channel.label}</span>
+      {channel.unavailable && <small className="contact-link-status">{channel.unavailable[language]}</small>}
+      {compact && channel.href && <PiArrowUpRight aria-hidden="true" />}
+    </>
+  );
+
+  if (!channel.href) {
+    return <div className={`${className} is-unavailable`} aria-disabled="true">{content}</div>;
+  }
+
   return (
     <a
-      className={compact ? "contact-strip-link" : "contact-channel-link"}
+      className={className}
       href={channel.href}
       aria-label={channel.label}
       target={channel.external ? "_blank" : undefined}
       rel={channel.external ? "noreferrer" : undefined}
     >
-      <span className="contact-link-label"><Icon aria-hidden="true" />{channel.label}</span>
-      {compact && <PiArrowUpRight aria-hidden="true" />}
+      {content}
     </a>
   );
 }
@@ -120,10 +133,10 @@ export function ContactsPage() {
               </div>
             </div>
             <div className="contact-channel-grid">
-              {channels.map((channel) => <ChannelLink channel={channel} key={channel.label} />)}
+              {channels.map((channel) => <ChannelLink channel={channel} language={language} key={channel.label} />)}
             </div>
             <div className="contact-primary-actions">
-              <a className="action-button action-button-primary" href="https://t.me/shalahinovads" target="_blank" rel="noreferrer">
+              <a className="action-button action-button-primary" href="https://t.me/MalbaroWFP" target="_blank" rel="noreferrer">
                 <PiTelegramLogo aria-hidden="true" />{copy.telegram}
               </a>
               <a className="action-button action-button-secondary" href="mailto:shalahinov.ads@gmail.com">
@@ -141,7 +154,7 @@ export function ContactsPage() {
           viewport={{ once: true, amount: 0.35 }}
           transition={{ duration, delay: reduceMotion ? 0 : 0.08, ease: [0.16, 1, 0.3, 1] }}
         >
-          {channels.map((channel) => <ChannelLink channel={channel} compact key={channel.label} />)}
+          {channels.map((channel) => <ChannelLink channel={channel} language={language} compact key={channel.label} />)}
         </motion.nav>
       </div>
 

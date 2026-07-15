@@ -445,7 +445,7 @@ export function AboutPage() {
           <div className="about-cta-actions">
             <a
               className="action-button action-button-primary"
-              href="mailto:dudnikovone@gmail.com"
+              href="mailto:shalahinov.ads@gmail.com"
             >
               {copy.write} <span aria-hidden="true">↗</span>
             </a>

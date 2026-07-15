@@ -444,20 +444,20 @@ export function ProjectsPage() {
             <p>{copy.taskLead}</p>
           </div>
           <div className="projects-cta-actions">
-            <button
+            <a
               className="action-button action-button-primary"
-              type="button"
-              onClick={() => setMenuOpen(true)}
+              href="mailto:shalahinov.ads@gmail.com"
             >
               {copy.write} <span aria-hidden="true">↗</span>
-            </button>
-            <button
+            </a>
+            <a
               className="action-button action-button-secondary"
-              type="button"
-              onClick={() => setMenuOpen(true)}
+              href="https://t.me/MalbaroWFP"
+              target="_blank"
+              rel="noreferrer"
             >
               {copy.discuss} <span aria-hidden="true">↗</span>
-            </button>
+            </a>
           </div>
         </motion.section>
 

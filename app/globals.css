@@ -2049,6 +2049,27 @@ a:focus-visible {
   box-shadow: 0 8px 24px rgba(25, 23, 19, 0.04);
 }
 
+.contact-channel-link.is-unavailable {
+  flex-direction: column;
+  gap: 6px;
+  background: #f8f8f6;
+  color: #777773;
+  cursor: not-allowed;
+}
+
+.contact-channel-link.is-unavailable:hover {
+  transform: none;
+  border-color: #e5e5e2;
+  box-shadow: none;
+}
+
+.contact-link-status {
+  color: #9a9a96;
+  font-size: 9px;
+  font-weight: 450;
+  letter-spacing: 0.02em;
+}
+
 .contact-link-label {
   display: inline-flex;
   align-items: center;
@@ -2114,6 +2135,15 @@ a:focus-visible {
 
 .contact-strip-link:hover {
   background: #f7f7f5;
+}
+
+.contact-strip-link.is-unavailable {
+  color: #7f7f7b;
+  cursor: not-allowed;
+}
+
+.contact-strip-link.is-unavailable:hover {
+  background: transparent;
 }
 
 .contact-strip-link > svg {
@@ -2912,6 +2942,14 @@ html[data-theme="dark"] .skill-track span {
 
 html[data-theme="dark"] :where(.contacts-email, .contact-channel-link, .contact-strip-link, .contact-spark) {
   color: #f2f2ef;
+}
+
+html[data-theme="dark"] :where(.contact-channel-link, .contact-strip-link).is-unavailable {
+  color: #9f9f9a;
+}
+
+html[data-theme="dark"] .contact-channel-link.is-unavailable {
+  background: #1b1b19;
 }
 
 html[data-theme="dark"] .contact-spark {

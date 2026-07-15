@@ -127,13 +127,12 @@ export default function Home() {
             >
               {copy.projects} <span aria-hidden="true">↗</span>
             </Link>
-            <button
+            <Link
               className="action-button action-button-secondary"
-              type="button"
-              onClick={() => setMenuOpen(true)}
+              href="/contacts"
             >
               {copy.contact} <span aria-hidden="true">↗</span>
-            </button>
+            </Link>
           </motion.div>
         </motion.div>
 
