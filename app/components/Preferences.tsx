@@ -38,8 +38,16 @@ function notifyPreferenceChange() {
 }
 
 export function PreferencesProvider({ children }: { children: React.ReactNode }) {
-  const language = useSyncExternalStore(subscribe, getLanguageSnapshot, () => "uk");
-  const theme = useSyncExternalStore(subscribe, getThemeSnapshot, () => "light");
+  const language = useSyncExternalStore(
+    subscribe,
+    getLanguageSnapshot,
+    (): Language => "uk",
+  );
+  const theme = useSyncExternalStore(
+    subscribe,
+    getThemeSnapshot,
+    (): Theme => "light",
+  );
 
   const value = useMemo<PreferencesValue>(
     () => ({
