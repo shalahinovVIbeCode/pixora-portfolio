@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { PreferencesProvider } from "./components/Preferences";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,8 +32,18 @@ export default function RootLayout({
     <html
       lang="uk"
       className={`${geistSans.variable} ${geistMono.variable}`}
+      suppressHydrationWarning
     >
-      <body className="antialiased">{children}</body>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('pixora-theme');var l=localStorage.getItem('pixora-language');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t;if(l==='uk'||l==='en'){document.documentElement.lang=l;document.documentElement.dataset.language=l}}catch(e){}})();`,
+          }}
+        />
+      </head>
+      <body className="antialiased">
+        <PreferencesProvider>{children}</PreferencesProvider>
+      </body>
     </html>
   );
 }

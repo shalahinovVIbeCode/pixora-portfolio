@@ -13,6 +13,7 @@ import {
 } from "react-icons/si";
 import LogoLoop, { type LogoItem } from "../components/LogoLoop";
 import { Brand, MenuButton, ModalMenu } from "../components/SiteChrome";
+import { PreferenceControls, usePreferences, type Language } from "../components/Preferences";
 
 const technologyLogos = [
   {
@@ -76,28 +77,28 @@ const projects = [
     number: "01",
     variant: "tracker",
     title: "Nova Tracker",
-    description: "Вебплатформа для моніторингу та аналітики логістики.",
+    description: { uk: "Вебплатформа для моніторингу та аналітики логістики.", en: "A web platform for logistics monitoring and analytics." },
     stack: ["Next.js", "TypeScript", "Tailwind CSS"],
   },
   {
     number: "02",
     variant: "medtech",
     title: "MedTech",
-    description: "Сайт для постачальника медичного обладнання та рішень.",
+    description: { uk: "Сайт для постачальника медичного обладнання та рішень.", en: "A website for a medical equipment and solutions supplier." },
     stack: ["React", "Vite", "TypeScript"],
   },
   {
     number: "03",
     variant: "travel",
     title: "Travel Time",
-    description: "Мобільний застосунок для планування подорожей.",
+    description: { uk: "Мобільний застосунок для планування подорожей.", en: "A mobile app for planning trips and routes." },
     stack: ["React Native", "Expo", "TypeScript"],
   },
   {
     number: "04",
     variant: "tasks",
     title: "Task Manager",
-    description: "Вебзастосунок для керування задачами та командною роботою.",
+    description: { uk: "Вебзастосунок для керування задачами та командною роботою.", en: "A web app for task management and team collaboration." },
     stack: ["Next.js", "Tailwind CSS", "PostgreSQL"],
   },
 ];
@@ -105,53 +106,96 @@ const projects = [
 const skills = [
   {
     code: "UI",
-    title: "UI/UX сайти",
-    detail: "Landing pages · Корпоративні сайти · Портфоліо",
+    title: { uk: "UI/UX сайти", en: "UI/UX websites" },
+    detail: { uk: "Landing pages · Корпоративні сайти · Портфоліо", en: "Landing pages · Corporate sites · Portfolios" },
     level: 0.95,
     percent: "95%",
   },
   {
     code: "</>",
-    title: "Вебзастосунки",
-    detail: "Next.js · React · TypeScript · Tailwind CSS",
+    title: { uk: "Вебзастосунки", en: "Web applications" },
+    detail: { uk: "Next.js · React · TypeScript · Tailwind CSS", en: "Next.js · React · TypeScript · Tailwind CSS" },
     level: 0.9,
     percent: "90%",
   },
   {
     code: "A",
-    title: "Автоматизація",
-    detail: "Скрипти · Внутрішні інструменти · Робочі процеси",
+    title: { uk: "Автоматизація", en: "Automation" },
+    detail: { uk: "Скрипти · Внутрішні інструменти · Робочі процеси", en: "Scripts · Internal tools · Workflows" },
     level: 0.8,
     percent: "80%",
   },
   {
     code: "API",
-    title: "Інтеграції",
-    detail: "API · Платіжні системи · CRM · Сторонні сервіси",
+    title: { uk: "Інтеграції", en: "Integrations" },
+    detail: { uk: "API · Платіжні системи · CRM · Сторонні сервіси", en: "API · Payments · CRM · Third-party services" },
     level: 0.85,
     percent: "85%",
   },
   {
     code: "APP",
-    title: "Мобільні застосунки",
-    detail: "React Native · Expo · Кросплатформні рішення",
+    title: { uk: "Мобільні застосунки", en: "Mobile applications" },
+    detail: { uk: "React Native · Expo · Кросплатформні рішення", en: "React Native · Expo · Cross-platform solutions" },
     level: 0.75,
     percent: "75%",
   },
 ];
 
+const projectsCopy = {
+  uk: {
+    section: "Проєкти",
+    title: "Що я зробив.",
+    titleAccent: "Реальні кейси.",
+    lead: "Сайти, застосунки та цифрові продукти, створені від ідеї до запуску.",
+    cases: "Кейси PIXORA",
+    stack: "Стек",
+    skills: "Навички",
+    skillsTitleOne: "Де можу",
+    skillsTitleTwo: "закрити задачу",
+    skillsLead: "Підбираю інструменти під задачу. Працюю там, де беру відповідальність за результат.",
+    task: "Є задача?",
+    taskLead: "Опишіть вашу ідею — запропоную рішення та план дій.",
+    write: "Написати мені",
+    discuss: "Обговорити проєкт",
+    techTitle: "Технології, з якими працюю",
+    techLabel: "Основний стек PIXORA",
+    privacy: "Політика конфіденційності",
+  },
+  en: {
+    section: "Projects",
+    title: "What I built.",
+    titleAccent: "Real cases.",
+    lead: "Websites, applications, and digital products built from idea to launch.",
+    cases: "PIXORA case studies",
+    stack: "Stack",
+    skills: "Skills",
+    skillsTitleOne: "Where I can",
+    skillsTitleTwo: "solve the task",
+    skillsLead: "I select tools for the task and work where I can own the result.",
+    task: "Have a task?",
+    taskLead: "Describe your idea — I’ll suggest a solution and an action plan.",
+    write: "Contact me",
+    discuss: "Discuss project",
+    techTitle: "Technologies I work with",
+    techLabel: "PIXORA core stack",
+    privacy: "Privacy policy",
+  },
+} as const;
+
 function ProjectPreview({
   variant,
   title,
+  language,
 }: {
   variant: string;
   title: string;
+  language: Language;
 }) {
   return (
     <div
       className={`project-preview preview-${variant}`}
       role="img"
-      aria-label={`Плейсхолдер прев’ю проєкту ${title}`}
+      aria-label={language === "uk" ? `Плейсхолдер прев’ю проєкту ${title}` : `Project preview placeholder for ${title}`}
     >
       <div className="preview-chrome">
         <span />
@@ -194,10 +238,10 @@ function ProjectPreview({
         <div className="medtech-ui">
           <div className="medtech-copy">
             <small>MED / TECH</small>
-            <strong>Обладнання для сучасних клінік</strong>
+            <strong>{language === "uk" ? "Обладнання для сучасних клінік" : "Equipment for modern clinics"}</strong>
             <i />
             <i />
-            <button tabIndex={-1}>Детальніше</button>
+            <button tabIndex={-1}>{language === "uk" ? "Детальніше" : "Explore"}</button>
           </div>
           <div className="medtech-object" aria-hidden="true">
             <span />
@@ -210,7 +254,7 @@ function ProjectPreview({
       {variant === "travel" && (
         <div className="travel-ui">
           <div className="travel-phone travel-phone-back">
-            <b>Маршрут</b>
+            <b>{language === "uk" ? "Маршрут" : "Route"}</b>
             <i />
             <i />
             <i />
@@ -233,7 +277,7 @@ function ProjectPreview({
             <i />
           </div>
           <div className="tasks-table">
-            <strong>Мої завдання</strong>
+            <strong>{language === "uk" ? "Мої завдання" : "My tasks"}</strong>
             {[0, 1, 2, 3].map((row) => (
               <div key={row}>
                 <span />
@@ -251,6 +295,8 @@ function ProjectPreview({
 export function ProjectsPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const reduceMotion = useReducedMotion();
+  const { language, theme } = usePreferences();
+  const copy = projectsCopy[language];
   const duration = reduceMotion ? 0 : 0.55;
 
   return (
@@ -258,6 +304,7 @@ export function ProjectsPage() {
       <header className="projects-topbar">
         <Brand />
         <MenuButton open={menuOpen} onOpen={() => setMenuOpen(true)} />
+        <PreferenceControls />
       </header>
 
       <div className="projects-content">
@@ -268,20 +315,19 @@ export function ProjectsPage() {
           transition={{ duration, ease: [0.16, 1, 0.3, 1] }}
         >
           <p className="section-eyebrow">
-            <span>01</span> Проєкти
+            <span>01</span> {copy.section}
           </p>
           <h1>
-            Що я зробив.
+            {copy.title}
             <br />
-            <span>Реальні кейси.</span>
+            <span>{copy.titleAccent}</span>
           </h1>
           <p className="projects-lead">
-            Сайти, застосунки та цифрові продукти, створені від ідеї до
-            запуску.
+            {copy.lead}
           </p>
         </motion.section>
 
-        <section className="projects-grid" aria-label="Кейси PIXORA">
+        <section className="projects-grid" aria-label={copy.cases}>
           {projects.map((project, index) => (
             <motion.article
               className="project-card"
@@ -310,11 +356,12 @@ export function ProjectsPage() {
               <ProjectPreview
                 variant={project.variant}
                 title={project.title}
+                language={language}
               />
               <div className="project-card-copy">
                 <h2>{project.title}</h2>
-                <p>{project.description}</p>
-                <ul aria-label={`Стек ${project.title}`}>
+                <p>{project.description[language]}</p>
+                <ul aria-label={`${copy.stack} ${project.title}`}>
                   {project.stack.map((technology) => (
                     <li key={technology}>{technology}</li>
                   ))}
@@ -334,28 +381,27 @@ export function ProjectsPage() {
         >
           <div className="skills-intro">
             <p className="section-eyebrow">
-              <span>02</span> Навички
+              <span>02</span> {copy.skills}
             </p>
             <h2 id="skills-title">
-              Де можу
+              {copy.skillsTitleOne}
               <br />
-              закрити задачу
+              {copy.skillsTitleTwo}
             </h2>
             <p>
-              Підбираю інструменти під задачу. Працюю там, де беру
-              відповідальність за результат.
+              {copy.skillsLead}
             </p>
           </div>
 
           <div className="skills-list">
             {skills.map((skill, index) => (
-              <div className="skill-row" key={skill.title}>
+              <div className="skill-row" key={skill.code}>
                 <span className="skill-icon" aria-hidden="true">
                   {skill.code}
                 </span>
                 <div className="skill-copy">
-                  <h3>{skill.title}</h3>
-                  <p>{skill.detail}</p>
+                  <h3>{skill.title[language]}</h3>
+                  <p>{skill.detail[language]}</p>
                 </div>
                 <div className="skill-meter">
                   <span className="skill-track">
@@ -394,8 +440,8 @@ export function ProjectsPage() {
             />
           </div>
           <div className="projects-cta-copy">
-            <h2>Є задача?</h2>
-            <p>Опишіть вашу ідею — запропоную рішення та план дій.</p>
+            <h2>{copy.task}</h2>
+            <p>{copy.taskLead}</p>
           </div>
           <div className="projects-cta-actions">
             <button
@@ -403,14 +449,14 @@ export function ProjectsPage() {
               type="button"
               onClick={() => setMenuOpen(true)}
             >
-              Написати мені <span aria-hidden="true">↗</span>
+              {copy.write} <span aria-hidden="true">↗</span>
             </button>
             <button
               className="action-button action-button-secondary"
               type="button"
               onClick={() => setMenuOpen(true)}
             >
-              Обговорити проєкт <span aria-hidden="true">↗</span>
+              {copy.discuss} <span aria-hidden="true">↗</span>
             </button>
           </div>
         </motion.section>
@@ -425,9 +471,9 @@ export function ProjectsPage() {
         >
           <div className="stack-loop-heading">
             <p className="section-eyebrow">
-              <span>03</span> Стек
+              <span>03</span> {copy.stack}
             </p>
-            <h2 id="stack-loop-title">Технології, з якими працюю</h2>
+            <h2 id="stack-loop-title">{copy.techTitle}</h2>
           </div>
           <LogoLoop
             logos={technologyLogos}
@@ -438,15 +484,15 @@ export function ProjectsPage() {
             hoverSpeed={reduceMotion ? 0 : 10}
             scaleOnHover={!reduceMotion}
             fadeOut
-            fadeOutColor="#ffffff"
-            ariaLabel="Основний стек PIXORA"
+            fadeOutColor={theme === "dark" ? "#151514" : "#ffffff"}
+            ariaLabel={copy.techLabel}
           />
         </motion.section>
       </div>
 
       <footer className="site-footer projects-footer">
         <span>© 2026 PIXORA</span>
-        <span className="footer-link">Політика конфіденційності</span>
+        <span className="footer-link">{copy.privacy}</span>
         <span className="footer-link">Cookie</span>
       </footer>
 

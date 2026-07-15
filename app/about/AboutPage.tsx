@@ -15,6 +15,7 @@ import {
   SiVercel,
 } from "react-icons/si";
 import { Brand, MenuButton, ModalMenu } from "../components/SiteChrome";
+import { PreferenceControls, usePreferences } from "../components/Preferences";
 
 type Benefit = {
   number: string;
@@ -103,6 +104,61 @@ const technologies = [
   { name: "PostgreSQL", detail: "Data", icon: SiPostgresql },
   { name: "Vercel", detail: "Delivery", icon: SiVercel },
 ] as const satisfies readonly Technology[];
+
+const benefitsEn = [
+  { number: "01", title: "One contact", description: "You speak directly with the person who designs, codes, and owns the result." },
+  { number: "02", title: "One solution", description: "Structure, design, development, and integrations work as one coherent system." },
+  { number: "03", title: "Faster decisions", description: "Fewer handoffs. Questions are solved where they appear, without extra approval loops." },
+  { number: "04", title: "Personal ownership", description: "I lead the project from the first conversation to launch and stay accountable." },
+] as const satisfies readonly Benefit[];
+
+const fitColumnsEn = [
+  {
+    number: "A",
+    label: "Good fit",
+    title: "When you need a partner, not a task executor",
+    description: "I work best with founders and teams who want to reach a working product quickly.",
+    items: ["You need a website or product end to end", "You value direct contact and quick decisions", "You are ready to focus on the result"],
+    tone: "positive",
+  },
+  {
+    number: "B",
+    label: "Not a fit",
+    title: "When process matters more than the result",
+    description: "I do not take projects where ownership is unclear and most time goes into internal approvals.",
+    items: ["You need a large team for a corporate process", "No one owns the final decision", "The work has no clear responsibility boundary"],
+    tone: "neutral",
+  },
+] as const satisfies readonly FitColumn[];
+
+const aboutCopy = {
+  uk: {
+    about: "Про мене", title: "Один розробник.", titleAccent: "Від ідеї до запуску.",
+    lead: "Мене звати Дмитро. PIXORA — моя незалежна студія цифрових продуктів. Я особисто проходжу весь шлях: від структури й дизайну до коду, інтеграцій та запуску.",
+    note: "Один фокус. Одна відповідальність. Один цілісний результат.",
+    role: "Роль", founder: "Засновник PIXORA", location: "Локація", locationValue: "Україна · UTC+3", status: "Статус", open: "Відкритий до проєктів",
+    approach: "Підхід", soloTitle: "Чому я працюю один",
+    soloOne: "Цифровий продукт втрачає цілісність, коли стратегія, дизайн і код живуть у різних командах. Я поєдную ці ролі, щоб рішення не губилися між етапами.",
+    soloTwo: "Це не означає роботу без системи. Навпаки: менше зайвих передач, коротший шлях до рішення й прозора відповідальність за кожен результат.",
+    quote: "Не продаю години команди. Збираю працюючий продукт і доводжу його до запуску.",
+    result: "Результат", benefitsTitle: "Що ви отримуєте", compatibility: "Сумісність", fitTitle: "Кому я підійду / не підійду",
+    stack: "Стек", stackTitle: "Інструменти, які допомагають запускати", next: "Наступний крок", task: "Є задача?",
+    taskLead: "Опишіть контекст. Запропоную реалістичний шлях до запуску.", write: "Написати", projects: "Переглянути проєкти", privacy: "Політика конфіденційності",
+  },
+  en: {
+    about: "About", title: "One developer.", titleAccent: "From idea to launch.",
+    lead: "I’m Dmytro. PIXORA is my independent digital product studio. I personally handle the full path: structure, design, code, integrations, and launch.",
+    note: "One focus. One responsibility. One coherent result.",
+    role: "Role", founder: "PIXORA founder", location: "Location", locationValue: "Ukraine · UTC+3", status: "Status", open: "Open to projects",
+    approach: "Approach", soloTitle: "Why I work solo",
+    soloOne: "A digital product loses coherence when strategy, design, and code live in separate teams. I combine these roles so decisions do not disappear between stages.",
+    soloTwo: "This does not mean working without a system. It means fewer handoffs, a shorter path to decisions, and clear ownership of every result.",
+    quote: "I do not sell team hours. I build a working product and take it to launch.",
+    result: "Result", benefitsTitle: "What you get", compatibility: "Compatibility", fitTitle: "Who I’m a fit for / not a fit for",
+    stack: "Stack", stackTitle: "Tools that help me launch", next: "Next step", task: "Have a task?",
+    taskLead: "Share the context. I’ll suggest a realistic path to launch.", write: "Contact me", projects: "View projects", privacy: "Privacy policy",
+  },
+} as const;
 
 function SectionLabel({ number, children }: { number: string; children: string }) {
   return (
@@ -193,6 +249,10 @@ function AboutSculpture({ reduceMotion }: { reduceMotion: boolean }) {
 export function AboutPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const reduceMotion = Boolean(useReducedMotion());
+  const { language } = usePreferences();
+  const copy = aboutCopy[language];
+  const localizedBenefits = language === "uk" ? benefits : benefitsEn;
+  const localizedFitColumns = language === "uk" ? fitColumns : fitColumnsEn;
   const duration = reduceMotion ? 0 : 0.58;
   const revealY = reduceMotion ? 0 : 12;
 
@@ -201,6 +261,7 @@ export function AboutPage() {
       <header className="about-topbar">
         <Brand />
         <MenuButton open={menuOpen} onOpen={() => setMenuOpen(true)} />
+        <PreferenceControls />
       </header>
 
       <div className="about-content">
@@ -211,37 +272,31 @@ export function AboutPage() {
           transition={{ duration, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="about-hero-copy">
-            <SectionLabel number="01">Про мене</SectionLabel>
+            <SectionLabel number="01">{copy.about}</SectionLabel>
             <h1>
-              <span className="about-title-primary">Один розробник.</span>
+              <span className="about-title-primary">{copy.title}</span>
               <br />
-              <span>Від ідеї до запуску.</span>
+              <span>{copy.titleAccent}</span>
             </h1>
-            <p className="about-lead">
-              Мене звати Дмитро. PIXORA — моя незалежна студія цифрових
-              продуктів. Я особисто проходжу весь шлях: від структури й дизайну
-              до коду, інтеграцій та запуску.
-            </p>
-            <p className="about-note">
-              Один фокус. Одна відповідальність. Один цілісний результат.
-            </p>
+            <p className="about-lead">{copy.lead}</p>
+            <p className="about-note">{copy.note}</p>
           </div>
 
           <div className="about-hero-visual">
             <AboutSculpture reduceMotion={reduceMotion} />
             <div className="founder-card">
               <div>
-                <span>Роль</span>
-                <strong>Засновник PIXORA</strong>
+                <span>{copy.role}</span>
+                <strong>{copy.founder}</strong>
               </div>
               <div>
-                <span>Локація</span>
-                <strong>Україна · UTC+3</strong>
+                <span>{copy.location}</span>
+                <strong>{copy.locationValue}</strong>
               </div>
               <div>
-                <span>Статус</span>
+                <span>{copy.status}</span>
                 <strong className="founder-status">
-                  <i aria-hidden="true" /> Відкритий до проєктів
+                  <i aria-hidden="true" /> {copy.open}
                 </strong>
               </div>
             </div>
@@ -257,24 +312,13 @@ export function AboutPage() {
           aria-labelledby="solo-title"
         >
           <div>
-            <SectionLabel number="02">Підхід</SectionLabel>
-            <h2 id="solo-title">Чому я працюю один</h2>
+            <SectionLabel number="02">{copy.approach}</SectionLabel>
+            <h2 id="solo-title">{copy.soloTitle}</h2>
           </div>
           <div className="solo-copy">
-            <p>
-              Цифровий продукт втрачає цілісність, коли стратегія, дизайн і код
-              живуть у різних командах. Я поєдную ці ролі, щоб рішення не
-              губилися між етапами.
-            </p>
-            <p>
-              Це не означає роботу без системи. Навпаки: менше зайвих передач,
-              коротший шлях до рішення й прозора відповідальність за кожен
-              результат.
-            </p>
-            <blockquote>
-              Не продаю години команди. Збираю працюючий продукт і доводжу його
-              до запуску.
-            </blockquote>
+            <p>{copy.soloOne}</p>
+            <p>{copy.soloTwo}</p>
+            <blockquote>{copy.quote}</blockquote>
           </div>
         </motion.section>
 
@@ -286,12 +330,12 @@ export function AboutPage() {
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration, ease: [0.16, 1, 0.3, 1] }}
           >
-            <SectionLabel number="03">Результат</SectionLabel>
-            <h2 id="benefits-title">Що ви отримуєте</h2>
+            <SectionLabel number="03">{copy.result}</SectionLabel>
+            <h2 id="benefits-title">{copy.benefitsTitle}</h2>
           </motion.div>
 
           <div className="benefits-grid">
-            {benefits.map((benefit, index) => (
+            {localizedBenefits.map((benefit, index) => (
               <motion.article
                 className="benefit-card"
                 key={benefit.title}
@@ -329,12 +373,12 @@ export function AboutPage() {
           aria-labelledby="fit-title"
         >
           <div className="about-section-heading fit-heading">
-            <SectionLabel number="04">Сумісність</SectionLabel>
-            <h2 id="fit-title">Кому я підійду / не підійду</h2>
+            <SectionLabel number="04">{copy.compatibility}</SectionLabel>
+            <h2 id="fit-title">{copy.fitTitle}</h2>
           </div>
 
           <div className="fit-grid">
-            {fitColumns.map((column) => (
+            {localizedFitColumns.map((column) => (
               <article
                 className={`fit-card fit-card-${column.tone}`}
                 key={column.label}
@@ -367,10 +411,8 @@ export function AboutPage() {
           aria-labelledby="about-stack-title"
         >
           <div className="about-section-heading stack-heading">
-            <SectionLabel number="05">Стек</SectionLabel>
-            <h2 id="about-stack-title">
-              Інструменти, які допомагають запускати
-            </h2>
+            <SectionLabel number="05">{copy.stack}</SectionLabel>
+            <h2 id="about-stack-title">{copy.stackTitle}</h2>
           </div>
           <div className="about-stack-grid">
             {technologies.map((technology) => {
@@ -396,22 +438,22 @@ export function AboutPage() {
           transition={{ duration, ease: [0.16, 1, 0.3, 1] }}
         >
           <div>
-            <SectionLabel number="06">Наступний крок</SectionLabel>
-            <h2>Є задача?</h2>
-            <p>Опишіть контекст. Запропоную реалістичний шлях до запуску.</p>
+            <SectionLabel number="06">{copy.next}</SectionLabel>
+            <h2>{copy.task}</h2>
+            <p>{copy.taskLead}</p>
           </div>
           <div className="about-cta-actions">
             <a
               className="action-button action-button-primary"
               href="mailto:dudnikovone@gmail.com"
             >
-              Написати <span aria-hidden="true">↗</span>
+              {copy.write} <span aria-hidden="true">↗</span>
             </a>
             <Link
               className="action-button action-button-secondary"
               href="/projects"
             >
-              Переглянути проєкти <span aria-hidden="true">↗</span>
+              {copy.projects} <span aria-hidden="true">↗</span>
             </Link>
           </div>
         </motion.section>
@@ -419,7 +461,7 @@ export function AboutPage() {
 
       <footer className="site-footer about-footer">
         <span>© 2026 PIXORA</span>
-        <span className="footer-link">Політика конфіденційності</span>
+        <span className="footer-link">{copy.privacy}</span>
         <span className="footer-link">Cookie</span>
       </footer>
 

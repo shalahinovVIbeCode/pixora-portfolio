@@ -514,10 +514,73 @@ a:focus-visible {
 .projects-topbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 20px;
   width: min(100%, 1480px);
   margin: 0 auto;
   padding: 30px clamp(24px, 6vw, 92px);
+}
+
+.preference-controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: auto;
+}
+
+.theme-toggle,
+.language-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #171716;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.preference-icon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 999px;
+  background: #111111;
+  color: #ffffff;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.12);
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 220ms ease;
+}
+
+.preference-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.language-toggle svg {
+  width: 14px;
+  height: 14px;
+}
+
+.theme-toggle:hover .preference-icon,
+.theme-toggle:focus-visible .preference-icon {
+  transform: rotate(10deg) scale(1.06);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.17);
+}
+
+.language-toggle:hover,
+.language-toggle:focus-visible {
+  transform: translateY(-1px);
+}
+
+.theme-toggle:focus-visible,
+.language-toggle:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+  border-radius: 999px;
 }
 
 .projects-content {
@@ -2712,6 +2775,221 @@ a:focus-visible {
     min-height: 44px;
     padding: 0 14px;
     font-size: 11px;
+  }
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #0d0d0c;
+  --foreground: #f4f4f1;
+}
+
+body,
+.projects-page,
+.about-page,
+.contacts-page,
+.site-footer,
+.project-card,
+.skills-section,
+.projects-cta,
+.stack-loop-section,
+.benefit-card,
+.fit-card,
+.about-stack-section,
+.about-stack-item,
+.about-cta,
+.contact-panel,
+.contact-channel-link,
+.contact-strip,
+.contact-strip-link,
+.menu-panel {
+  transition: background-color 280ms ease, border-color 280ms ease, color 280ms ease, box-shadow 280ms ease;
+}
+
+html[data-theme="dark"] body,
+html[data-theme="dark"] .projects-page,
+html[data-theme="dark"] .about-page,
+html[data-theme="dark"] .contacts-page,
+html[data-theme="dark"] .site-footer {
+  background: #0d0d0c;
+  color: #f4f4f1;
+}
+
+html[data-theme="dark"] .page-shell > .site-footer,
+html[data-theme="dark"] .about-footer,
+html[data-theme="dark"] .projects-footer,
+html[data-theme="dark"] .contacts-footer {
+  border-color: #292927;
+  color: #a5a5a0;
+}
+
+html[data-theme="dark"] .brand,
+html[data-theme="dark"] .theme-toggle,
+html[data-theme="dark"] .language-toggle {
+  color: #f4f4f1;
+}
+
+html[data-theme="dark"] .brand-mark {
+  background: #f4f4f1;
+}
+
+html[data-theme="dark"] .brand-mark::after {
+  background: #111111;
+}
+
+html[data-theme="dark"] .menu-button {
+  border-color: #f4f4f1;
+  background: #f4f4f1;
+  color: #111111;
+}
+
+html[data-theme="dark"] .menu-button span {
+  background: #111111;
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .preference-icon {
+  background: #f4f4f1;
+  color: #111111;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.32);
+}
+
+html[data-theme="dark"] .hero-wash {
+  background: rgba(5, 5, 5, 0.42);
+}
+
+html[data-theme="dark"] .hero::after {
+  background: #0d0d0c;
+  box-shadow: 0 -28px 50px rgba(13, 13, 12, 0.86);
+}
+
+html[data-theme="dark"] .hero-copy h1,
+html[data-theme="dark"] :where(.projects-page, .about-page, .contacts-page) :where(h1, h2, h3, strong, dd) {
+  color: #f4f4f1;
+}
+
+html[data-theme="dark"] .hero-copy h1 span,
+html[data-theme="dark"] .projects-intro h1 span,
+html[data-theme="dark"] .hero-description,
+html[data-theme="dark"] :where(.projects-page, .about-page, .contacts-page) :where(.section-eyebrow, .projects-lead, .about-lead, .about-note, dt) {
+  color: #a1a19c;
+}
+
+html[data-theme="dark"] .tech-list li,
+html[data-theme="dark"] .project-card-copy li,
+html[data-theme="dark"] .stack-logo {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(24, 24, 23, 0.84);
+  color: #deded9;
+}
+
+html[data-theme="dark"] :where(.project-card, .skills-section, .projects-cta, .stack-loop-section, .about-sculpture, .founder-card, .benefit-card, .fit-card-positive, .about-stack-section, .about-stack-item, .about-cta, .contact-panel, .contact-channel-link, .contact-strip, .contact-strip-link) {
+  border-color: #2c2c29;
+  background: #151514;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.18);
+}
+
+html[data-theme="dark"] .fit-card-neutral {
+  border-color: #31312e;
+  background: #1b1b19;
+}
+
+html[data-theme="dark"] :where(.founder-card > div, .skill-row, .fit-card li, .contact-details div) {
+  border-color: #2c2c29;
+}
+
+html[data-theme="dark"] :where(.project-card-copy p, .skill-copy p, .projects-cta p, .stack-loop-heading p, .benefit-card p, .solo-copy p, .fit-description, .fit-card li, .about-stack-item span, .about-cta p, .contact-panel-intro p) {
+  color: #9f9f9a;
+}
+
+html[data-theme="dark"] .skill-track {
+  background: #333330;
+}
+
+html[data-theme="dark"] .skill-track span {
+  background: #f0f0ec;
+}
+
+html[data-theme="dark"] :where(.contacts-email, .contact-channel-link, .contact-strip-link, .contact-spark) {
+  color: #f2f2ef;
+}
+
+html[data-theme="dark"] .contact-spark {
+  background: #222220;
+}
+
+html[data-theme="dark"] :where(.founder-card span, .fit-card-head, .menu-footer) {
+  color: #9f9f9a;
+}
+
+html[data-theme="dark"] .action-button-primary {
+  border-color: #f2f2ef;
+  background: #f2f2ef;
+  color: #111111;
+}
+
+html[data-theme="dark"] .action-button-secondary {
+  border-color: #3a3a37;
+  background: #191918;
+  color: #f2f2ef;
+}
+
+html[data-theme="dark"] .menu-backdrop {
+  background: rgba(0, 0, 0, 0.66);
+}
+
+html[data-theme="dark"] .menu-panel {
+  border-color: #30302d;
+  background: #151514;
+  color: #f3f3ef;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.38);
+}
+
+html[data-theme="dark"] .menu-header,
+html[data-theme="dark"] .menu-list a {
+  border-color: #30302d;
+}
+
+html[data-theme="dark"] .menu-list a {
+  color: #f3f3ef;
+}
+
+html[data-theme="dark"] .menu-list a:hover,
+html[data-theme="dark"] .menu-list a:focus-visible,
+html[data-theme="dark"] .menu-list a.is-current {
+  background: #f2f2ef;
+  color: #111111;
+}
+
+html[data-theme="dark"] .menu-close {
+  border-color: #353532;
+  background: #222220;
+  color: #f3f3ef;
+}
+
+@media (max-width: 640px) {
+  .site-header,
+  .projects-topbar,
+  .about-topbar,
+  .contacts-topbar {
+    gap: 10px;
+  }
+
+  .preference-controls {
+    gap: 8px;
+  }
+
+  .preference-label {
+    display: none;
+  }
+
+  .preference-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .language-toggle {
+    gap: 5px;
   }
 }
 

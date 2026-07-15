@@ -12,6 +12,7 @@ import {
   PiTelegramLogo,
 } from "react-icons/pi";
 import { Brand, MenuButton, ModalMenu } from "../components/SiteChrome";
+import { PreferenceControls, usePreferences } from "../components/Preferences";
 
 type ContactChannel = {
   label: string;
@@ -28,10 +29,35 @@ const channels = [
 ] as const satisfies readonly ContactChannel[];
 
 const details = [
-  { label: "Місто", value: "Львів, Україна" },
-  { label: "Часовий пояс", value: "UTC+3" },
-  { label: "Відповідь", value: "протягом доби" },
+  { label: { uk: "Місто", en: "City" }, value: { uk: "Львів, Україна", en: "Lviv, Ukraine" } },
+  { label: { uk: "Часовий пояс", en: "Time zone" }, value: { uk: "UTC+3", en: "UTC+3" } },
+  { label: { uk: "Відповідь", en: "Reply" }, value: { uk: "протягом доби", en: "within one day" } },
 ] as const;
+
+const contactsCopy = {
+  uk: {
+    section: "Контакти",
+    title: "Напишіть, що потрібно зробити, а я розберусь.",
+    channels: "Канали зв’язку",
+    panelTitle: "Зручно зв’язатися напряму — оберіть будь-який канал.",
+    panelLead: "Відкритий до нових проєктів, співпраці та цікавих ідей.",
+    telegram: "Написати в Telegram",
+    email: "Написати email",
+    all: "Усі контакти",
+    rights: "Усі права захищено.",
+  },
+  en: {
+    section: "Contacts",
+    title: "Tell me what needs to be built. I’ll figure it out.",
+    channels: "Contact channels",
+    panelTitle: "Reach me directly — choose any channel.",
+    panelLead: "Open to new projects, collaborations, and interesting ideas.",
+    telegram: "Message on Telegram",
+    email: "Send email",
+    all: "All contacts",
+    rights: "All rights reserved.",
+  },
+} as const;
 
 function ChannelLink({ channel, compact = false }: { channel: ContactChannel; compact?: boolean }) {
   const Icon = channel.icon;
@@ -52,6 +78,8 @@ function ChannelLink({ channel, compact = false }: { channel: ContactChannel; co
 export function ContactsPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const reduceMotion = Boolean(useReducedMotion());
+  const { language } = usePreferences();
+  const copy = contactsCopy[language];
   const revealY = reduceMotion ? 0 : 14;
   const duration = reduceMotion ? 0 : 0.65;
 
@@ -60,6 +88,7 @@ export function ContactsPage() {
       <header className="contacts-topbar">
         <Brand />
         <MenuButton open={menuOpen} onOpen={() => setMenuOpen(true)} />
+        <PreferenceControls />
       </header>
 
       <div className="contacts-content">
@@ -70,24 +99,24 @@ export function ContactsPage() {
           transition={{ duration, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="contacts-copy">
-            <p className="section-eyebrow"><span>01</span> Контакти</p>
-            <h1>Напишіть, що потрібно зробити, а я розберусь.</h1>
+            <p className="section-eyebrow"><span>01</span> {copy.section}</p>
+            <h1>{copy.title}</h1>
             <a className="contacts-email" href="mailto:shalahinov.ads@gmail.com">
               <span>shalahinov.ads@gmail.com</span><PiArrowUpRight aria-hidden="true" />
             </a>
             <dl className="contact-details">
               {details.map((detail) => (
-                <div key={detail.label}><dt>{detail.label}</dt><dd>{detail.value}</dd></div>
+                <div key={detail.label.uk}><dt>{detail.label[language]}</dt><dd>{detail.value[language]}</dd></div>
               ))}
             </dl>
           </div>
 
-          <aside className="contact-panel" aria-label="Канали зв’язку">
+          <aside className="contact-panel" aria-label={copy.channels}>
             <div className="contact-panel-intro">
               <span className="contact-spark" aria-hidden="true"><PiSparkle /></span>
               <div>
-                <h2>Зручно зв’язатися напряму — оберіть будь-який канал.</h2>
-                <p>Відкритий до нових проєктів, співпраці та цікавих ідей.</p>
+                <h2>{copy.panelTitle}</h2>
+                <p>{copy.panelLead}</p>
               </div>
             </div>
             <div className="contact-channel-grid">
@@ -95,10 +124,10 @@ export function ContactsPage() {
             </div>
             <div className="contact-primary-actions">
               <a className="action-button action-button-primary" href="https://t.me/shalahinovads" target="_blank" rel="noreferrer">
-                <PiTelegramLogo aria-hidden="true" />Написати в Telegram
+                <PiTelegramLogo aria-hidden="true" />{copy.telegram}
               </a>
               <a className="action-button action-button-secondary" href="mailto:shalahinov.ads@gmail.com">
-                <PiEnvelopeSimple aria-hidden="true" />Написати email
+                <PiEnvelopeSimple aria-hidden="true" />{copy.email}
               </a>
             </div>
           </aside>
@@ -106,7 +135,7 @@ export function ContactsPage() {
 
         <motion.nav
           className="contact-strip"
-          aria-label="Усі контакти"
+          aria-label={copy.all}
           initial={{ opacity: 0, y: revealY }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.35 }}
@@ -116,7 +145,7 @@ export function ContactsPage() {
         </motion.nav>
       </div>
 
-      <footer className="site-footer contacts-footer"><span>© 2026 PIXORA. Усі права захищено.</span></footer>
+      <footer className="site-footer contacts-footer"><span>© 2026 PIXORA. {copy.rights}</span></footer>
       <ModalMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
     </main>
   );

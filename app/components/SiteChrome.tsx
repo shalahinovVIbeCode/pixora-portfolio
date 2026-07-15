@@ -4,13 +4,14 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
+import { usePreferences } from "./Preferences";
 
 const navigationItems = [
-  { label: "Головна", href: "/" },
-  { label: "Проєкти", href: "/projects" },
-  { label: "Про мене", href: "/about" },
-  { label: "Контакти", href: "/contacts" },
-];
+  { label: { uk: "Головна", en: "Home" }, href: "/" },
+  { label: { uk: "Проєкти", en: "Projects" }, href: "/projects" },
+  { label: { uk: "Про мене", en: "About" }, href: "/about" },
+  { label: { uk: "Контакти", en: "Contacts" }, href: "/contacts" },
+] as const;
 
 export function Brand() {
   return (
@@ -28,6 +29,7 @@ export function MenuButton({
   open: boolean;
   onOpen: () => void;
 }) {
+  const { language } = usePreferences();
   return (
     <button
       className="menu-button"
@@ -36,7 +38,7 @@ export function MenuButton({
       aria-controls="main-menu"
       onClick={onOpen}
     >
-      <span aria-hidden="true">+</span> Меню
+      <span aria-hidden="true">+</span> {language === "uk" ? "Меню" : "Menu"}
     </button>
   );
 }
@@ -51,6 +53,7 @@ export function ModalMenu({
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
   const pathname = usePathname();
+  const { language } = usePreferences();
 
   useEffect(() => {
     if (!open) return;
@@ -88,7 +91,7 @@ export function ModalMenu({
             className="menu-panel"
             role="dialog"
             aria-modal="true"
-            aria-label="Головне меню"
+            aria-label={language === "uk" ? "Головне меню" : "Main menu"}
             initial={{ opacity: 0, y: reduceMotion ? 0 : 10, scale: 0.992 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: 0.994 }}
@@ -98,12 +101,12 @@ export function ModalMenu({
             }}
           >
             <div className="menu-header">
-              <span className="menu-kicker">Відкрити розділ</span>
+              <span className="menu-kicker">{language === "uk" ? "Відкрити розділ" : "Open section"}</span>
               <button
                 ref={closeButtonRef}
                 className="close-button"
                 type="button"
-                aria-label="Закрити меню"
+                aria-label={language === "uk" ? "Закрити меню" : "Close menu"}
                 onClick={onClose}
               >
                 ×
@@ -111,7 +114,7 @@ export function ModalMenu({
             </div>
 
             <motion.nav
-              aria-label="Навігація"
+              aria-label={language === "uk" ? "Навігація" : "Navigation"}
               initial="hidden"
               animate="visible"
               variants={{
@@ -130,7 +133,7 @@ export function ModalMenu({
 
                   return (
                     <motion.li
-                      key={item.label}
+                      key={item.href}
                       variants={{
                         hidden: { opacity: 0, y: 5 },
                         visible: {
@@ -152,7 +155,7 @@ export function ModalMenu({
                         <span className="menu-index">
                           {String(index + 1).padStart(2, "0")}
                         </span>
-                        <span className="menu-name">{item.label}</span>
+                        <span className="menu-name">{item.label[language]}</span>
                         <span className="menu-arrow" aria-hidden="true">
                           →
                         </span>
@@ -165,7 +168,7 @@ export function ModalMenu({
 
             <div className="menu-footer">
               <span>© 2026 PIXORA</span>
-              <span className="footer-link">Політика конфіденційності</span>
+              <span className="footer-link">{language === "uk" ? "Політика конфіденційності" : "Privacy policy"}</span>
               <span className="footer-link">Cookie</span>
             </div>
           </motion.section>

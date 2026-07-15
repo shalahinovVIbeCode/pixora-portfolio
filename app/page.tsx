@@ -4,12 +4,38 @@ import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
 import { Brand, MenuButton, ModalMenu } from "./components/SiteChrome";
+import { PreferenceControls, usePreferences } from "./components/Preferences";
 
 const technologies = ["Next.js", "React", "TypeScript", "Tailwind CSS"];
+
+const homeCopy = {
+  uk: {
+    titleOne: "Сайти, застосунки,",
+    titleTwo: "автоматизація.",
+    titleThree: "Від ідеї до запуску.",
+    description: "Допомагаю бізнесам та стартапам створювати цифрові продукти, які вирішують задачі та приносять результат.",
+    projects: "Переглянути проєкти",
+    contact: "Написати мені",
+    technologies: "Технології",
+    privacy: "Політика конфіденційності",
+  },
+  en: {
+    titleOne: "Websites, apps,",
+    titleTwo: "automation.",
+    titleThree: "From idea to launch.",
+    description: "I help businesses and startups build digital products that solve real problems and deliver results.",
+    projects: "View projects",
+    contact: "Contact me",
+    technologies: "Technologies",
+    privacy: "Privacy policy",
+  },
+} as const;
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const reduceMotion = useReducedMotion();
+  const { language } = usePreferences();
+  const copy = homeCopy[language];
 
   const duration = reduceMotion ? 0 : 0.32;
 
@@ -38,6 +64,7 @@ export default function Home() {
         >
           <Brand />
           <MenuButton open={menuOpen} onOpen={() => setMenuOpen(true)} />
+          <PreferenceControls />
         </motion.header>
 
         <motion.div
@@ -62,11 +89,11 @@ export default function Home() {
               },
             }}
           >
-            Сайти, застосунки,
+            {copy.titleOne}
             <br />
-            автоматизація.
+            {copy.titleTwo}
             <br />
-            <span>Від ідеї до запуску.</span>
+            <span>{copy.titleThree}</span>
           </motion.h1>
 
           <motion.p
@@ -80,8 +107,7 @@ export default function Home() {
               },
             }}
           >
-            Допомагаю бізнесам та стартапам створювати цифрові продукти,
-            які вирішують задачі та приносять результат.
+            {copy.description}
           </motion.p>
 
           <motion.div
@@ -99,21 +125,21 @@ export default function Home() {
               className="action-button action-button-primary"
               href="/projects"
             >
-              Переглянути проєкти <span aria-hidden="true">↗</span>
+              {copy.projects} <span aria-hidden="true">↗</span>
             </Link>
             <button
               className="action-button action-button-secondary"
               type="button"
               onClick={() => setMenuOpen(true)}
             >
-              Написати мені <span aria-hidden="true">↗</span>
+              {copy.contact} <span aria-hidden="true">↗</span>
             </button>
           </motion.div>
         </motion.div>
 
         <motion.ul
           className="technology-list"
-          aria-label="Технології"
+          aria-label={copy.technologies}
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
@@ -135,7 +161,7 @@ export default function Home() {
 
       <footer className="site-footer">
         <span>© 2026 PIXORA</span>
-        <span className="footer-link">Політика конфіденційності</span>
+        <span className="footer-link">{copy.privacy}</span>
         <span className="footer-link">Cookie</span>
       </footer>
 
