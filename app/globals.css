@@ -67,17 +67,34 @@ a:focus-visible {
   box-shadow: none;
 }
 
-.hero-image {
+.hero-video {
+  position: absolute;
+  inset: 0;
   z-index: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  height: 10px;
+  background: var(--background);
+  box-shadow: 0 -22px 34px 18px rgba(246, 245, 242, 0.34);
+  pointer-events: none;
 }
 
 .hero-wash {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.12);
   pointer-events: none;
 }
 
@@ -282,6 +299,12 @@ a:focus-visible {
   background: #ffffff;
   font-size: 10px;
   line-height: 1.4;
+}
+
+.page-shell > .site-footer {
+  min-height: 46px;
+  padding: 0 20px;
+  background: var(--background);
 }
 
 .footer-link {
@@ -2153,8 +2176,8 @@ a:focus-visible {
     max-width: 760px;
   }
 
-  .hero-image {
-    object-position: 64% center;
+  .hero-video {
+    object-position: 32% center;
   }
 
   .hero-wash {
@@ -2339,8 +2362,8 @@ a:focus-visible {
     font-size: 9px;
   }
 
-  .hero-image {
-    object-position: 64% center;
+  .hero-video {
+    object-position: 18% center;
   }
 
   .hero-wash {

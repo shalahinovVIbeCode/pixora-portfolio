@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
@@ -17,14 +16,18 @@ export default function Home() {
   return (
     <main className="page-shell" id="home">
       <section className="hero" aria-labelledby="hero-title">
-        <Image
-          className="hero-image"
-          src="/pixora-peony.png"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-        />
+        <video
+          className="hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/pixora-peony.png"
+          aria-hidden="true"
+        >
+          <source src="/pixora-peony.mp4" type="video/mp4" />
+        </video>
         <div className="hero-wash" aria-hidden="true" />
 
         <motion.header
