@@ -24,7 +24,7 @@ import { Brand, MenuButton, ModalMenu } from "../components/SiteChrome";
 import { PreferenceControls, usePreferences, type Language } from "../components/Preferences";
 
 type LocalizedText = Record<Language, string>;
-type ProjectVariant = "rivnia" | "tracker" | "medtech" | "travel" | "tasks";
+type ProjectVariant = "rivnia" | "nova" | "tracker" | "medtech" | "travel" | "tasks";
 
 type ProjectCase = {
   number: string;
@@ -35,6 +35,7 @@ type ProjectCase = {
   previewImage?: string;
   previewAlt?: LocalizedText;
   liveUrl?: string;
+  hideActions?: boolean;
   stack: readonly string[];
   task: LocalizedText;
   approach: LocalizedText;
@@ -140,27 +141,37 @@ const projects: readonly ProjectCase[] = [
   },
   {
     number: "02",
-    variant: "medtech",
-    title: "MedTech",
-    description: { uk: "Сайт для постачальника медичного обладнання та рішень.", en: "A website for a medical equipment and solutions supplier." },
-    stack: ["React", "Vite", "TypeScript", "Framer Motion"],
+    variant: "nova",
+    title: "Nova Tracker",
+    category: { uk: "Десктопна програма", en: "Desktop application" },
+    description: {
+      uk: "Десктопна програма для контролю фокусу та продуктивності: відстежує активність у застосунках, показує час за категоріями, задачі й персональні інсайти.",
+      en: "A desktop application for focus and productivity that tracks app activity, visualizes time by category, and brings tasks and personal insights together.",
+    },
+    previewImage: "/nova-tracker-preview.png",
+    previewAlt: {
+      uk: "Темний dashboard програми Nova Tracker зі статистикою активності та фокус-сесіями",
+      en: "Nova Tracker dark dashboard with activity statistics and focus sessions",
+    },
+    hideActions: true,
+    stack: ["Electron", "React", "TypeScript", "Vite"],
     task: {
-      uk: "Оновити цифрову присутність постачальника та зробити складний каталог медичного обладнання простим для клінік.",
-      en: "Refresh the supplier’s digital presence and make a complex medical equipment catalog easy for clinics.",
+      uk: "Створити приватний робочий центр, який допомагає бачити, куди йде час, тримати фокус і не перевантажує зайвими метриками.",
+      en: "Create a private command center that shows where time goes, supports focus, and avoids overwhelming users with unnecessary metrics.",
     },
     approach: {
-      uk: "Систематизували категорії, скоротили шлях до консультації та побудували стриману візуальну мову навколо продукту.",
-      en: "Organized categories, shortened the path to consultation, and built a restrained visual language around the product.",
+      uk: "Темний інтерфейс, яскраві акценти, два основні режими Dashboard і Tasks, наочні графіки та автоматичне відстеження активних програм.",
+      en: "A dark interface, vivid accents, focused Dashboard and Tasks modes, clear charts, and automatic active-app tracking.",
     },
     result: {
-      uk: "Каталог читається швидше, ключові характеристики видно одразу, а запит на обладнання займає кілька кроків.",
-      en: "The catalog scans faster, key specifications are immediate, and an equipment request takes only a few steps.",
+      uk: "Швидка десктопна програма з єдиним cockpit для активності, фокус-сесій, задач і щоденної статистики.",
+      en: "A fast desktop app with one cockpit for activity, focus sessions, tasks, and daily statistics.",
     },
     stats: [
-      { value: "28", label: { uk: "категорій", en: "categories" } },
-      { value: "2.1s", label: { uk: "завантаження", en: "load time" } },
-      { value: "92", label: { uk: "Performance", en: "Performance" } },
-      { value: "AA", label: { uk: "доступність", en: "accessibility" } },
+      { value: "Electron", label: { uk: "платформа", en: "platform" } },
+      { value: "2", label: { uk: "робочі режими", en: "work modes" } },
+      { value: "4", label: { uk: "категорії часу", en: "time categories" } },
+      { value: "Focus", label: { uk: "головний сценарій", en: "core flow" } },
     ],
   },
   {
@@ -589,33 +600,35 @@ function CaseStudyModal({
               {project.stack.map((technology) => <li key={technology}>{technology}</li>)}
             </motion.ul>
 
-            <motion.div
-              className="case-study-actions"
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: reduceMotion ? 0 : 0.36, delay: reduceMotion ? 0 : 0.44 }}
-            >
-              {project.liveUrl ? (
-                <a
-                  className="action-button action-button-primary"
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {copy.liveVersion} <PiArrowUpRight aria-hidden="true" />
-                </a>
-              ) : (
-                <>
-                  <button className="action-button action-button-primary" type="button" disabled aria-describedby="case-placeholder-note">
+            {!project.hideActions && (
+              <motion.div
+                className="case-study-actions"
+                initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: reduceMotion ? 0 : 0.36, delay: reduceMotion ? 0 : 0.44 }}
+              >
+                {project.liveUrl ? (
+                  <a
+                    className="action-button action-button-primary"
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     {copy.liveVersion} <PiArrowUpRight aria-hidden="true" />
-                  </button>
-                  <button className="action-button action-button-secondary" type="button" disabled aria-describedby="case-placeholder-note">
-                    {copy.viewProject} <PiArrowUpRight aria-hidden="true" />
-                  </button>
-                  <small id="case-placeholder-note">{copy.placeholderNote}</small>
-                </>
-              )}
-            </motion.div>
+                  </a>
+                ) : (
+                  <>
+                    <button className="action-button action-button-primary" type="button" disabled aria-describedby="case-placeholder-note">
+                      {copy.liveVersion} <PiArrowUpRight aria-hidden="true" />
+                    </button>
+                    <button className="action-button action-button-secondary" type="button" disabled aria-describedby="case-placeholder-note">
+                      {copy.viewProject} <PiArrowUpRight aria-hidden="true" />
+                    </button>
+                    <small id="case-placeholder-note">{copy.placeholderNote}</small>
+                  </>
+                )}
+              </motion.div>
+            )}
 
             <div className="case-study-flower" aria-hidden="true">
               <Image src="/pixora-peony.png" alt="" fill sizes="210px" />

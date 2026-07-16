@@ -708,6 +708,10 @@ a:focus-visible {
   background: #ebe7dc;
 }
 
+.preview-nova {
+  background: #030707;
+}
+
 .preview-chrome {
   position: absolute;
   top: 11px;
