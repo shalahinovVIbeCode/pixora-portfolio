@@ -467,10 +467,10 @@ function CaseStudyModal({
             role="dialog"
             aria-modal="true"
             aria-labelledby={`case-title-${project.number}`}
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 24, scale: reduceMotion ? 1 : 0.985 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : 0.99 }}
-            transition={{ duration: reduceMotion ? 0 : 0.42, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, x: reduceMotion ? 0 : 56 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: reduceMotion ? 0 : 42 }}
+            transition={{ duration: reduceMotion ? 0 : 0.46, ease: [0.16, 1, 0.3, 1] }}
           >
             <button
               className="case-study-close"
@@ -482,45 +482,77 @@ function CaseStudyModal({
               <PiX aria-hidden="true" />
             </button>
 
-            <header className="case-study-header">
+            <motion.header
+              className="case-study-header"
+              initial={{ opacity: 0, x: reduceMotion ? 0 : 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.4, delay: reduceMotion ? 0 : 0.08 }}
+            >
               <p className="section-eyebrow"><span>{project.number}</span> {copy.case}</p>
               <h2 id={`case-title-${project.number}`}>{project.title}</h2>
               <p>{project.description[language]}</p>
-            </header>
+            </motion.header>
 
-            <div className="case-study-preview">
+            <motion.div
+              className="case-study-preview"
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.46, delay: reduceMotion ? 0 : 0.13 }}
+            >
               <ProjectPreview variant={project.variant} title={project.title} language={language} />
-            </div>
+            </motion.div>
 
             <div className="case-study-details">
-              {detailRows.map((row) => {
+              {detailRows.map((row, index) => {
                 const DetailIcon = row.icon;
                 return (
-                  <section className="case-study-detail" key={row.label}>
+                  <motion.section
+                    className="case-study-detail"
+                    key={row.label}
+                    initial={{ opacity: 0, x: reduceMotion ? 0 : 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: reduceMotion ? 0 : 0.38, delay: reduceMotion ? 0 : 0.18 + index * 0.045 }}
+                  >
                     <span className="case-study-detail-icon" aria-hidden="true"><DetailIcon /></span>
                     <div>
                       <h3>{row.label}</h3>
                       <p>{row.body}</p>
                     </div>
-                  </section>
+                  </motion.section>
                 );
               })}
             </div>
 
-            <dl className="case-study-stats">
+            <motion.dl
+              className="case-study-stats"
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.4, delay: reduceMotion ? 0 : 0.36 }}
+            >
               {project.stats.map((stat) => (
                 <div key={stat.label.uk}>
                   <dt>{stat.value}</dt>
                   <dd>{stat.label[language]}</dd>
                 </div>
               ))}
-            </dl>
+            </motion.dl>
 
-            <ul className="case-study-tags" aria-label={`${copy.caseStack} ${project.title}`}>
+            <motion.ul
+              className="case-study-tags"
+              aria-label={`${copy.caseStack} ${project.title}`}
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.36, delay: reduceMotion ? 0 : 0.4 }}
+            >
               {project.stack.map((technology) => <li key={technology}>{technology}</li>)}
-            </ul>
+            </motion.ul>
 
-            <div className="case-study-actions">
+            <motion.div
+              className="case-study-actions"
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.36, delay: reduceMotion ? 0 : 0.44 }}
+            >
               <button className="action-button action-button-primary" type="button" disabled aria-describedby="case-placeholder-note">
                 {copy.liveVersion} <PiArrowUpRight aria-hidden="true" />
               </button>
@@ -528,7 +560,7 @@ function CaseStudyModal({
                 {copy.viewProject} <PiArrowUpRight aria-hidden="true" />
               </button>
               <small id="case-placeholder-note">{copy.placeholderNote}</small>
-            </div>
+            </motion.div>
 
             <div className="case-study-flower" aria-hidden="true">
               <Image src="/pixora-peony.png" alt="" fill sizes="210px" />
