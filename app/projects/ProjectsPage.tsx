@@ -24,13 +24,17 @@ import { Brand, MenuButton, ModalMenu } from "../components/SiteChrome";
 import { PreferenceControls, usePreferences, type Language } from "../components/Preferences";
 
 type LocalizedText = Record<Language, string>;
-type ProjectVariant = "tracker" | "medtech" | "travel" | "tasks";
+type ProjectVariant = "rivnia" | "tracker" | "medtech" | "travel" | "tasks";
 
 type ProjectCase = {
   number: string;
   variant: ProjectVariant;
   title: string;
+  category?: LocalizedText;
   description: LocalizedText;
+  previewImage?: string;
+  previewAlt?: LocalizedText;
+  liveUrl?: string;
   stack: readonly string[];
   task: LocalizedText;
   approach: LocalizedText;
@@ -98,30 +102,40 @@ const technologyLogos = [
   },
 ] as const satisfies readonly LogoItem[];
 
-const projects = [
+const projects: readonly ProjectCase[] = [
   {
     number: "01",
-    variant: "tracker",
-    title: "Nova Tracker",
-    description: { uk: "Вебплатформа для моніторингу та аналітики логістики.", en: "A web platform for logistics monitoring and analytics." },
-    stack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase"],
+    variant: "rivnia",
+    title: "RIVNIA BARBERS",
+    category: { uk: "Сайт для барбершопу", en: "Barbershop website" },
+    description: {
+      uk: "Сучасний преміальний сайт барбершопу у Львові з великими заголовками, атмосферними фото, блоками послуг, майстрів і швидким записом.",
+      en: "A modern premium website for a Lviv barbershop with bold headlines, atmospheric photography, service and barber sections, and quick booking.",
+    },
+    previewImage: "/rivnia-barbers-preview.png",
+    previewAlt: {
+      uk: "Головний екран сайту RIVNIA BARBERS із великим заголовком та фото барбера",
+      en: "RIVNIA BARBERS website hero with a bold headline and barber photograph",
+    },
+    liveUrl: "https://rivnia-barbers.vercel.app/",
+    stack: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
     task: {
-      uk: "Створити зрозумілу вебплатформу для моніторингу відправлень і ключових логістичних показників у реальному часі.",
-      en: "Build a clear web platform for monitoring shipments and key logistics metrics in real time.",
+      uk: "Створити стильний сайт, який передає характер бренду та мотивує записатися.",
+      en: "Create a stylish website that communicates the brand character and motivates visitors to book.",
     },
     approach: {
-      uk: "Побудували модульну структуру, спростили навігацію та зібрали ключові показники в одному спокійному dashboard.",
-      en: "Built a modular structure, simplified navigation, and brought key metrics into one focused dashboard.",
+      uk: "Сильна типографіка, темні фото, тепла палітра, просте меню й акцентна CTA-кнопка.",
+      en: "Bold typography, dark photography, a warm palette, simple navigation, and a focused CTA button.",
     },
     result: {
-      uk: "Команда швидше бачить затримки, контролює статуси й витрачає менше часу на ручне зведення даних.",
-      en: "The team spots delays faster, controls statuses, and spends less time compiling data manually.",
+      uk: "Адаптивний сайт із плавними анімаціями та зрозумілою навігацією.",
+      en: "A responsive website with smooth animations and clear navigation.",
     },
     stats: [
-      { value: "3+", label: { uk: "місяці", en: "months" } },
-      { value: "4", label: { uk: "етапи", en: "stages" } },
-      { value: "<1s", label: { uk: "FCP", en: "FCP" } },
-      { value: "95", label: { uk: "Lighthouse", en: "Lighthouse" } },
+      { value: "Львів", label: { uk: "локація", en: "location" } },
+      { value: "4", label: { uk: "ключові блоки", en: "core sections" } },
+      { value: "4", label: { uk: "технології", en: "technologies" } },
+      { value: "Live", label: { uk: "статус", en: "status" } },
     ],
   },
   {
@@ -199,7 +213,7 @@ const projects = [
       { value: "94", label: { uk: "Lighthouse", en: "Lighthouse" } },
     ],
   },
-] as const satisfies readonly ProjectCase[];
+];
 
 const skills = [
   {
@@ -304,22 +318,41 @@ function ProjectPreview({
   variant,
   title,
   language,
+  previewImage,
+  previewAlt,
 }: {
   variant: ProjectVariant;
   title: string;
   language: Language;
+  previewImage?: string;
+  previewAlt?: LocalizedText;
 }) {
+  const fallbackAlt = language === "uk"
+    ? `Плейсхолдер прев’ю проєкту ${title}`
+    : `Project preview placeholder for ${title}`;
+
   return (
     <div
       className={`project-preview preview-${variant}`}
-      role="img"
-      aria-label={language === "uk" ? `Плейсхолдер прев’ю проєкту ${title}` : `Project preview placeholder for ${title}`}
+      role={previewImage ? undefined : "img"}
+      aria-label={previewImage ? undefined : fallbackAlt}
     >
-      <div className="preview-chrome">
-        <span />
-        <span />
-        <span />
-      </div>
+      {previewImage ? (
+        <Image
+          className="project-preview-image"
+          src={previewImage}
+          alt={previewAlt?.[language] ?? title}
+          fill
+          priority={variant === "rivnia"}
+          sizes="(max-width: 760px) 100vw, (max-width: 1100px) 50vw, 640px"
+        />
+      ) : (
+        <div className="preview-chrome">
+          <span />
+          <span />
+          <span />
+        </div>
+      )}
 
       {variant === "tracker" && (
         <div className="tracker-ui">
@@ -488,7 +521,10 @@ function CaseStudyModal({
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: reduceMotion ? 0 : 0.4, delay: reduceMotion ? 0 : 0.08 }}
             >
-              <p className="section-eyebrow"><span>{project.number}</span> {copy.case}</p>
+              <p className="section-eyebrow">
+                <span>{project.number}</span> {copy.case}
+                {project.category ? ` · ${project.category[language]}` : ""}
+              </p>
               <h2 id={`case-title-${project.number}`}>{project.title}</h2>
               <p>{project.description[language]}</p>
             </motion.header>
@@ -499,7 +535,13 @@ function CaseStudyModal({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: reduceMotion ? 0 : 0.46, delay: reduceMotion ? 0 : 0.13 }}
             >
-              <ProjectPreview variant={project.variant} title={project.title} language={language} />
+              <ProjectPreview
+                variant={project.variant}
+                title={project.title}
+                language={language}
+                previewImage={project.previewImage}
+                previewAlt={project.previewAlt}
+              />
             </motion.div>
 
             <div className="case-study-details">
@@ -553,13 +595,26 @@ function CaseStudyModal({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: reduceMotion ? 0 : 0.36, delay: reduceMotion ? 0 : 0.44 }}
             >
-              <button className="action-button action-button-primary" type="button" disabled aria-describedby="case-placeholder-note">
-                {copy.liveVersion} <PiArrowUpRight aria-hidden="true" />
-              </button>
-              <button className="action-button action-button-secondary" type="button" disabled aria-describedby="case-placeholder-note">
-                {copy.viewProject} <PiArrowUpRight aria-hidden="true" />
-              </button>
-              <small id="case-placeholder-note">{copy.placeholderNote}</small>
+              {project.liveUrl ? (
+                <a
+                  className="action-button action-button-primary"
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {copy.liveVersion} <PiArrowUpRight aria-hidden="true" />
+                </a>
+              ) : (
+                <>
+                  <button className="action-button action-button-primary" type="button" disabled aria-describedby="case-placeholder-note">
+                    {copy.liveVersion} <PiArrowUpRight aria-hidden="true" />
+                  </button>
+                  <button className="action-button action-button-secondary" type="button" disabled aria-describedby="case-placeholder-note">
+                    {copy.viewProject} <PiArrowUpRight aria-hidden="true" />
+                  </button>
+                  <small id="case-placeholder-note">{copy.placeholderNote}</small>
+                </>
+              )}
             </motion.div>
 
             <div className="case-study-flower" aria-hidden="true">
@@ -644,6 +699,8 @@ export function ProjectsPage() {
                 variant={project.variant}
                 title={project.title}
                 language={language}
+                previewImage={project.previewImage}
+                previewAlt={project.previewAlt}
               />
               <div className="project-card-copy">
                 <h2>{project.title}</h2>
