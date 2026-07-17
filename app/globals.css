@@ -716,6 +716,10 @@ a:focus-visible {
   background: #ebe7df;
 }
 
+.preview-kava {
+  background: #27231e;
+}
+
 .preview-chrome {
   position: absolute;
   top: 11px;

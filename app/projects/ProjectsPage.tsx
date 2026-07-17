@@ -24,7 +24,7 @@ import { Brand, MenuButton, ModalMenu } from "../components/SiteChrome";
 import { PreferenceControls, usePreferences, type Language } from "../components/Preferences";
 
 type LocalizedText = Record<Language, string>;
-type ProjectVariant = "rivnia" | "nova" | "volvo" | "tracker" | "medtech" | "travel" | "tasks";
+type ProjectVariant = "rivnia" | "nova" | "volvo" | "kava" | "tracker" | "medtech" | "travel" | "tasks";
 
 type ProjectCase = {
   number: string;
@@ -211,27 +211,37 @@ const projects: readonly ProjectCase[] = [
   },
   {
     number: "04",
-    variant: "tasks",
-    title: "Task Manager",
-    description: { uk: "Вебзастосунок для керування задачами та командною роботою.", en: "A web app for task management and team collaboration." },
-    stack: ["Next.js", "Tailwind CSS", "PostgreSQL", "Zustand"],
+    variant: "kava",
+    title: "Місто Кава",
+    category: { uk: "Сайт specialty-кав’ярні", en: "Specialty coffee website" },
+    description: {
+      uk: "Атмосферний сайт київської specialty-кав’ярні з великим hero-блоком, меню, історією простору та швидким бронюванням столика.",
+      en: "An atmospheric website for a Kyiv specialty coffee shop with a large hero, menu, venue story, and quick table booking.",
+    },
+    previewImage: "/misto-kava-preview.png",
+    previewAlt: {
+      uk: "Головний екран сайту Місто Кава з атмосферним фото кав’ярні та великим типографічним заголовком",
+      en: "Misto Kava website hero with an atmospheric coffee shop photograph and large editorial headline",
+    },
+    liveUrl: "https://misto-kava.vercel.app/",
+    stack: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
     task: {
-      uk: "Дати невеликій команді спільний простір для задач, статусів і пріоритетів без складного корпоративного інтерфейсу.",
-      en: "Give a small team one place for tasks, statuses, and priorities without a complex enterprise interface.",
+      uk: "Створити теплий цифровий образ кав’ярні, який передає атмосферу місця та швидко веде гостя до меню або бронювання.",
+      en: "Create a warm digital identity that conveys the venue’s atmosphere and quickly guides guests to the menu or table booking.",
     },
     approach: {
-      uk: "Зібрали швидку таблицю задач, чіткі фільтри та мінімальну систему ролей із фокусом на щоденній роботі.",
-      en: "Built a fast task table, clear filters, and a minimal role system focused on everyday work.",
+      uk: "Виразна serif-типографіка, тепла палітра, атмосферні фото, м’які анімації, прості CTA та адаптивна навігація.",
+      en: "Expressive serif typography, a warm palette, atmospheric photography, soft motion, simple CTAs, and responsive navigation.",
     },
     result: {
-      uk: "Менше втрат контексту між повідомленнями, прозорий прогрес і швидший розподіл задач усередині команди.",
-      en: "Less context lost in messages, clearer progress, and faster task allocation across the team.",
+      uk: "Адаптивний промосайт із цілісною візуальною мовою, зрозумілим меню та коротким шляхом до бронювання.",
+      en: "A responsive promotional website with a cohesive visual language, clear menu, and a short path to booking.",
     },
     stats: [
-      { value: "6", label: { uk: "ролей", en: "roles" } },
-      { value: "9", label: { uk: "станів", en: "states" } },
-      { value: "0.4s", label: { uk: "пошук", en: "search" } },
-      { value: "94", label: { uk: "Lighthouse", en: "Lighthouse" } },
+      { value: "Київ", label: { uk: "локація", en: "location" } },
+      { value: "2", label: { uk: "основні CTA", en: "primary CTAs" } },
+      { value: "4", label: { uk: "технології", en: "technologies" } },
+      { value: "Live", label: { uk: "статус", en: "status" } },
     ],
   },
 ];
