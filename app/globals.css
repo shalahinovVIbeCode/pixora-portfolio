@@ -712,6 +712,10 @@ a:focus-visible {
   background: #030707;
 }
 
+.preview-volvo {
+  background: #ebe7df;
+}
+
 .preview-chrome {
   position: absolute;
   top: 11px;

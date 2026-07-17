@@ -24,7 +24,7 @@ import { Brand, MenuButton, ModalMenu } from "../components/SiteChrome";
 import { PreferenceControls, usePreferences, type Language } from "../components/Preferences";
 
 type LocalizedText = Record<Language, string>;
-type ProjectVariant = "rivnia" | "nova" | "tracker" | "medtech" | "travel" | "tasks";
+type ProjectVariant = "rivnia" | "nova" | "volvo" | "tracker" | "medtech" | "travel" | "tasks";
 
 type ProjectCase = {
   number: string;
@@ -176,27 +176,37 @@ const projects: readonly ProjectCase[] = [
   },
   {
     number: "03",
-    variant: "travel",
-    title: "Travel Time",
-    description: { uk: "Мобільний застосунок для планування подорожей.", en: "A mobile app for planning trips and routes." },
-    stack: ["React Native", "Expo", "TypeScript", "Mapbox"],
+    variant: "volvo",
+    title: "Volvo XC90",
+    category: { uk: "Автомобільний промосайт", en: "Automotive showcase" },
+    description: {
+      uk: "Промосайт Volvo XC90 першого покоління з кінематографічною подачею, великими фото та секціями екстер’єру, інтер’єру, характеристик і безпеки.",
+      en: "A cinematic showcase for the first-generation Volvo XC90 with large-scale imagery and focused sections for exterior, interior, specifications, and safety.",
+    },
+    previewImage: "/volvo-xc90-preview.png",
+    previewAlt: {
+      uk: "Головний екран промосайту Volvo XC90 з автомобілем на тлі гір",
+      en: "Volvo XC90 showcase hero with the car against a mountain landscape",
+    },
+    liveUrl: "https://volvo-xc90.vercel.app/#home",
+    stack: ["Next.js", "TypeScript", "GSAP", "Three.js"],
     task: {
-      uk: "Об’єднати маршрут, місця, бронювання та нотатки в одному мобільному сценарії без перевантажених екранів.",
-      en: "Combine routes, places, bookings, and notes in one mobile flow without overloaded screens.",
+      uk: "Створити емоційну цифрову презентацію XC90, яка передає скандинавський характер моделі та послідовно розкриває її ключові переваги.",
+      en: "Create an emotional digital presentation of the XC90 that conveys its Scandinavian character and reveals the model’s key strengths in a clear sequence.",
     },
     approach: {
-      uk: "Побудували планування навколо часової лінії, додали швидкі дії та залишили на кожному екрані лише потрібний контекст.",
-      en: "Built planning around a timeline, added quick actions, and kept only essential context on each screen.",
+      uk: "Мінімалістична навігація, повноекранні композиції, стримана типографіка, плавний скролінг, GSAP-переходи та делікатні 3D-акценти.",
+      en: "Minimal navigation, full-screen compositions, restrained typography, smooth scrolling, GSAP transitions, and subtle 3D accents.",
     },
     result: {
-      uk: "Подорож можна зібрати й змінити на ходу; основні деталі маршруту залишаються доступними офлайн.",
-      en: "A trip can be assembled and changed on the go, while essential route details stay available offline.",
+      uk: "Адаптивний іммерсивний сайт із цілісним storytelling, плавними анімаціями та швидким доступом до ключових розділів автомобіля.",
+      en: "A responsive immersive website with cohesive storytelling, smooth motion, and quick access to the vehicle’s key sections.",
     },
     stats: [
-      { value: "12", label: { uk: "екранів", en: "screens" } },
-      { value: "2", label: { uk: "платформи", en: "platforms" } },
-      { value: "<80ms", label: { uk: "відгук UI", en: "UI response" } },
-      { value: "4.8", label: { uk: "UX оцінка", en: "UX score" } },
+      { value: "5", label: { uk: "ключових секцій", en: "core sections" } },
+      { value: "4", label: { uk: "технології", en: "technologies" } },
+      { value: "3D", label: { uk: "візуальний акцент", en: "visual accent" } },
+      { value: "Live", label: { uk: "статус", en: "status" } },
     ],
   },
   {
